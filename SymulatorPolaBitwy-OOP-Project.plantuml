@@ -1,0 +1,68 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ApplicationMain {
+  + ApplicationMain(): 
+  + main(String[]): void
+}
+class Champion << abstract >>{
+    + int level;
+    + int hp;
+    + int strength;
+    + int range;
+    + int luck;
+    + boolean has_shield;
+    + boolean has_sword;
+    + int x_index;
+    + int y_index;
+  + Champion():
+}
+class Chest {
+    + isMimic;
+  + Chest(): 
+}
+class Elf {
+  + Elf():
+}
+class Human {
+  + Human(): 
+}
+interface Interaction << interface >>{
+ + Fight():
+ + Use():
+ + Heal():
+ + Move():
+}
+class Item {
+  + Item():
+}
+class Kit  << abstract >>{
+    + int x_index;
+    + int y_index;
+  + Kit(): 
+}
+class Map {
+    + int width;
+    + int height;
+  + Map():
+}
+class Ork {
+  + Ork(): 
+}
+class Potion {
+    + hpHealed
+  + Potion(): 
+}
+
+Champion         -[#008200,dashed]-^  Interaction     
+Chest            -[#000082,plain]-^  Kit             
+Elf              -[#000082,plain]-^  Champion        
+Human            -[#000082,plain]-^  Champion
+Item             -[#000082,plain]-^  Kit
+Kit              -[#008200,dashed]-^  Interaction     
+Ork              -[#000082,plain]-^  Champion        
+Potion           -[#000082,plain]-^  Kit
+@enduml
