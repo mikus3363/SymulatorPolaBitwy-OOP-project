@@ -18,7 +18,7 @@ public abstract class Champion implements Interaction {
         return x_index;
     }
     public int getY_index(){
-        return x_index;
+        return y_index;
     }
 
 

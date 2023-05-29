@@ -33,6 +33,15 @@ public class Map {
                     if(mapa.get(i).get(j).race == "elf"){
                         System.out.print(" E ");
                     }
+                    if(mapa.get(i).get(j).race == "potion"){
+                        System.out.print(" & ");
+                    }
+                    if(mapa.get(i).get(j).race == "item"){
+                        System.out.print(" $ ");
+                    }
+                    if(mapa.get(i).get(j).race == "chest"){
+                        System.out.print(" # ");
+                    }
                 }
                 else {
                     System.out.print("   ");
