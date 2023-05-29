@@ -13,15 +13,15 @@ public class Map {
         this.width = width;
     }
     public Map(ArrayList<ArrayList<Champion>> mapa){
-        System.out.print("_");
+        System.out.print("╔");
         for (int i = 0 ; i < 12 ; i++ ) {
-            System.out.print("___");
+            System.out.print("═══");
         }
-        System.out.print("_");
+        System.out.print("╗");
         System.out.println();
 
         for (int i = 0 ; i < 12 ; i++ ) {
-            System.out.print("|");
+            System.out.print("║");
             for (int j = 0 ; j < 12 ; j++ ) {
                 if(mapa.get(i).get(j) != null){
                     if(mapa.get(i).get(j).race == "ork"){
@@ -34,27 +34,27 @@ public class Map {
                         System.out.print(" E ");
                     }
                     if(mapa.get(i).get(j).type == "potion"){
-                        System.out.print(" & ");
+                        System.out.print(" p ");
                     }
                     if(mapa.get(i).get(j).type == "item"){
-                        System.out.print(" $ ");
+                        System.out.print(" i ");
                     }
                     if(mapa.get(i).get(j).type == "chest"){
-                        System.out.print(" # ");
+                        System.out.print(" c ");
                     }
                 }
                 else {
                     System.out.print("   ");
                 }
             }
-            System.out.print("|");
+            System.out.print("║");
             System.out.print("\n");
         }
-        System.out.print("_");
+        System.out.print("╚");
         for (int i = 0 ; i < 12 ; i++ ) {
-            System.out.print("___");
+            System.out.print("═══");
         }
-        System.out.print("_");
+        System.out.print("╝");
         System.out.println();
     }
 

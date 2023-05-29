@@ -1,5 +1,6 @@
 package me.simulation;
 
+import java.math.*;
 import java.util.*;
 import me.simulation.equipments.*;
 import me.simulation.game.Map;
@@ -25,6 +26,32 @@ public class ApplicationMain {
             }
         }
 
+        for (int i = 0; i < 30 ; i++){
+            int rand1 = (int) (Math.random() * (12));
+            int rand2 = (int) (Math.random() * (12));
+
+            if(i<5 && i>=0 && mapa.get(rand1).get(rand2)==null){
+                mapa.get(rand1).add(rand2, new Ork("ork", 5, 20, 10, 1, 0, false, false, rand1, rand2));
+            }
+            if(i<10 && i>=5 && mapa.get(rand1).get(rand2)==null){
+                mapa.get(rand1).add(rand2, new Human("human", 5, 20, 10, 1, 0, false, false, rand1, rand2));
+            }
+            if(i<15 && i>=10 && mapa.get(rand1).get(rand2)==null){
+                mapa.get(rand1).add(rand2, new Elf("elf", 5, 20, 10, 1, 0, false, false, rand1, rand2));
+            }
+            if(i<20 && i>=15 && mapa.get(rand1).get(rand2)==null){
+                mapa.get(rand1).add(rand2, new Chest("chest", rand1, rand2));
+            }
+            if(i<25 && i>=20 && mapa.get(rand1).get(rand2)==null){
+                mapa.get(rand1).add(rand2, new Item("item", rand1, rand2));
+            }
+            if(i<30 && i>=25 && mapa.get(rand1).get(rand2)==null){
+                mapa.get(rand1).add(rand2, new Potion("potion", rand1, rand2));
+            }
+
+        }
+
+        /*
         mapa.get(ork1.x_index).add(ork1.y_index, ork1);
         mapa.get(human1.x_index).add(human1.y_index, human1);
         mapa.get(elf1.x_index).add(elf1.y_index, elf1);
@@ -44,6 +71,7 @@ public class ApplicationMain {
         mapa.get(3).add(4, ork1);
         mapa.get(2).add(7, human1);
         mapa.get(5).add(6, elf1);
+         */
 
         new Map(mapa);
     }
