@@ -1,11 +1,9 @@
 package me.simulation.equipments;
 
 import me.simulation.game.Interaction;
+import me.simulation.players.Champion;
 
-public abstract class Kit implements Interaction {
-    public String type;
-    public int x_index;
-    public int y_index;
+public abstract class Kit extends Champion implements Interaction {
     public int getX_index(){
         return x_index;
     }

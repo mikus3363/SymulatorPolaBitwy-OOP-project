@@ -33,13 +33,13 @@ public class Map {
                     if(mapa.get(i).get(j).race == "elf"){
                         System.out.print(" E ");
                     }
-                    if(mapa.get(i).get(j).race == "potion"){
+                    if(mapa.get(i).get(j).type == "potion"){
                         System.out.print(" & ");
                     }
-                    if(mapa.get(i).get(j).race == "item"){
+                    if(mapa.get(i).get(j).type == "item"){
                         System.out.print(" $ ");
                     }
-                    if(mapa.get(i).get(j).race == "chest"){
+                    if(mapa.get(i).get(j).type == "chest"){
                         System.out.print(" # ");
                     }
                 }
