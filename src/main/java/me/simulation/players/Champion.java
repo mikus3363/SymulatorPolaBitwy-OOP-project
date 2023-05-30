@@ -5,6 +5,7 @@ public abstract class Champion implements Interaction {
     public String race;
     public String type;
     public int level;
+    public int maxhp;
     public int hp;
     public int strength;
     public int range;
