@@ -14,7 +14,15 @@ public class Map {
     public int width;
     public int height;
     ArrayList<ArrayList<Champion>> map;
-
+    public ArrayList<ArrayList<Champion>> getMap(){
+        return map;
+    }
+    public int getWidth(){
+        return width;
+    }
+    public int getHeight(){
+        return height;
+    }
     public Map(int width, int height){
         this.height = height;
         this.width = width;
