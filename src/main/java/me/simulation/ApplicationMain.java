@@ -13,7 +13,7 @@ public class ApplicationMain {
         // Teraz mozna dac rozny rozmiar mapy
         Map map = new Map(12, 12);
 
-        map.placeObjectRandomly(30);
+        map.placeObjectRandomly(5,5,5,5,5,5);
         map.mapDraw();
 
         ArrayList<ArrayList<Champion>> list = map.getMap();
@@ -90,6 +90,7 @@ public class ApplicationMain {
             }
         }
         map.mapDraw();
+        System.out.println(map.getMap());
     }
 
 }

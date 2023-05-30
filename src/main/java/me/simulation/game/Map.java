@@ -39,46 +39,81 @@ public class Map {
         this.map = map;
     }
 
-    public void placeObjectRandomly(int howMuch){
-        for (int i = 0; i < howMuch; i++){
-
+    public void placeObjectRandomly(int howMuchOrk, int howMuchHuman, int howMuchElf, int howMuchChest, int howMuchItem, int howMuchPotion){
+        int i;
+        i = 0;
+        while(i < howMuchOrk) {
             int rand1 = (int) (Math.random() * (height));
             int rand2 = (int) (Math.random() * (width));
+            if(map.get(rand1).get(rand2)==null){
+                map.get(rand1).set(rand2, new Ork("ork", 5, 20,20, 10, 1, 0,true, false, false, rand1, rand2));
+                i++;
+            }
+        }
 
-            if(i<5 && i>=0 && map.get(rand1).get(rand2)==null){
-                map.get(rand1).add(rand2, new Ork("ork", 5, 20, 10, 1, 0,true, false, false, rand1, rand2));
+        i = 0;
+        while(i < howMuchHuman) {
+            int rand1 = (int) (Math.random() * (height - 1));
+            int rand2 = (int) (Math.random() * (width - 1));
+            if(map.get(rand1).get(rand2)==null){
+                map.get(rand1).set(rand2, new Human("human", 5, 20,20, 10, 1, 0,true, false, false, rand1, rand2));
+                i++;
             }
-            if(i<10 && i>=5 && map.get(rand1).get(rand2)==null){
-                map.get(rand1).add(rand2, new Human("human", 5, 20, 10, 1, 0,true, false, false, rand1, rand2));
-            }
-            if(i<15 && i>=10 && map.get(rand1).get(rand2)==null){
-                map.get(rand1).add(rand2, new Elf("elf", 5, 20, 10, 1, 0,true, false, false, rand1, rand2));
-            }
-            if(i<20 && i>=15 && map.get(rand1).get(rand2)==null){
-                map.get(rand1).add(rand2, new Chest("chest", rand1, rand2));
-            }
-            if(i<25 && i>=20 && map.get(rand1).get(rand2)==null){
-                map.get(rand1).add(rand2, new Item("item", rand1, rand2));
-            }
-            if(i<30 && i>=25 && map.get(rand1).get(rand2)==null){
-                map.get(rand1).add(rand2, new Potion("potion", rand1, rand2));
-            }
+        }
 
+        i = 0;
+        while(i < howMuchElf) {
+            int rand1 = (int) (Math.random() * (height - 1));
+            int rand2 = (int) (Math.random() * (width - 1));
+            if(map.get(rand1).get(rand2)==null){
+                map.get(rand1).set(rand2, new Elf("elf", 5, 20,20, 10, 1, 0,true, false, false, rand1, rand2));
+                i++;
+            }
+        }
+
+        i = 0;
+        while(i < howMuchChest) {
+            int rand1 = (int) (Math.random() * (height - 1));
+            int rand2 = (int) (Math.random() * (width - 1));
+            if(map.get(rand1).get(rand2)==null){
+                map.get(rand1).set(rand2, new Chest("chest", rand1, rand2));
+                i++;
+            }
+        }
+
+        i = 0;
+        while(i < howMuchItem) {
+            int rand1 = (int) (Math.random() * (height - 1));
+            int rand2 = (int) (Math.random() * (width - 1));
+            if(map.get(rand1).get(rand2)==null){
+                map.get(rand1).set(rand2, new Item("item", rand1, rand2));
+                i++;
+            }
+        }
+
+        i = 0;
+        while(i < howMuchPotion) {
+            int rand1 = (int) (Math.random() * (height - 1));
+            int rand2 = (int) (Math.random() * (width - 1));
+            if(map.get(rand1).get(rand2)==null){
+                map.get(rand1).set(rand2, new Potion("potion", rand1, rand2));
+                i++;
+            }
         }
 
     }
 
     public void mapDraw(){
         System.out.print("╔");
-        for (int i = 0 ; i < width; i++ ) {
+        for (int i = 0 ; i < map.size(); i++ ) {
             System.out.print("═══");
         }
         System.out.print("╗");
         System.out.println();
 
-        for (int i = 0 ; i < height; i++ ) {
+        for (int i = 0 ; i < map.size(); i++ ) {
             System.out.print("║");
-            for (int j = 0 ; j < width; j++ ) {
+            for (int j = 0 ; j < map.get(i).size(); j++ ) {
                 if(map.get(i).get(j) != null){
                     if(map.get(i).get(j).race == "ork"){
                         System.out.print(" O ");
