@@ -9,6 +9,7 @@ public abstract class Champion implements Interaction {
     public int strength;
     public int range;
     public int luck;
+    public boolean move;
     public boolean has_shield;
     public boolean has_sword;
     public int x_index;
