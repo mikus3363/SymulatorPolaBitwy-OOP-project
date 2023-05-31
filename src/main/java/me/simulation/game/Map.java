@@ -9,6 +9,7 @@ import me.simulation.players.Human;
 import me.simulation.players.Ork;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Map {
     public int width;
@@ -111,30 +112,29 @@ public class Map {
         System.out.print("╗");
         System.out.println();
 
-        for (int i = 0 ; i < map.size(); i++ ) {
+        for (ArrayList<Champion> champions : map) {
             System.out.print("║");
-            for (int j = 0 ; j < map.get(i).size(); j++ ) {
-                if(map.get(i).get(j) != null){
-                    if(map.get(i).get(j).race == "ork"){
+            for (Champion champion : champions) {
+                if (champion != null) {
+                    if (champion.race == "ork") {
                         System.out.print(" O ");
                     }
-                    if(map.get(i).get(j).race == "human"){
+                    if (champion.race == "human") {
                         System.out.print(" H ");
                     }
-                    if(map.get(i).get(j).race == "elf"){
+                    if (champion.race == "elf") {
                         System.out.print(" E ");
                     }
-                    if(map.get(i).get(j).type == "potion"){
+                    if (champion.type == "potion") {
                         System.out.print(" p ");
                     }
-                    if(map.get(i).get(j).type == "item"){
+                    if (champion.type == "item") {
                         System.out.print(" i ");
                     }
-                    if(map.get(i).get(j).type == "chest"){
+                    if (champion.type == "chest") {
                         System.out.print(" c ");
                     }
-                }
-                else {
+                } else {
                     System.out.print("   ");
                 }
             }
@@ -148,7 +148,66 @@ public class Map {
         System.out.print("╝");
         System.out.println();
     }
+    public void dayCycle(){
+        ArrayList<ArrayList<Champion>> list = map;
 
+        for (int i = 0 ; i < height; i++ ) {
+            for (int j = 0 ; j < width; j++ ) {
+                if(list.get(i).get(j) != null){
+                    if(list.get(i).get(j).move){
+                        list.get(i).get(j).move = false;
+                        Random generator = new Random();
+                        Champion champ = list.get(i).get(j);
+                        int randommove = generator.nextInt(4);//zawsze sie rusza, warunki mało zdrowia zawsze 0
+                        switch (randommove){
+                            case 0://stój w miejscu
+                                break;
+                            case 1://ruch w prawo
+                                if(j + 1 > 10){//ściana
+                                    map.get(i).set(j,null);
+                                    map.get(i).set(j - 1,champ);
+                                }
+                                else {
+                                    map.get(i).set(j,null);
+                                    map.get(i).set(j + 1,champ);
+                                }
+                                break;
+                            case 2://ruch w lewo
+                                if(j - 1 < 0){//ściana
+                                    map.get(i).set(j,null);
+                                    map.get(i).set(j + 1,champ);
+                                }
+                                else {
+                                    map.get(i).set(j,null);
+                                    map.get(i).set(j - 1,champ);
+                                }
+                                break;
+                            case 3://ruch do góry
+                                if(i - 1 < 0){//ściana
+                                    map.get(i).set(j,null);
+                                    map.get(i + 1).set(j,champ);
+                                }
+                                else {
+                                    map.get(i).set(j,null);
+                                    map.get(i - 1).set(j,champ);
+                                }
+                                break;
+                            case 4://ruch w dół
+                                if(i + 1 > 10){//ściana
+                                    map.get(i).set(j,null);
+                                    map.get(i - 1).set(j,champ);
+                                }
+                                else {
+                                    map.get(i).set(j,null);
+                                    map.get(i + 1).set(j,champ);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
     public static void clear(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
