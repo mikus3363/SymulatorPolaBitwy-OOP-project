@@ -207,6 +207,13 @@ public class Map {
                 }
             }
         }
+        for (int i = 0 ; i < height; i++ ) {
+            for (int j = 0; j < width; j++) {
+                if (list.get(i).get(j) != null) {
+                    list.get(i).get(j).move = true;
+                }
+            }
+        }
     }
     public static void clear(){
         System.out.print("\033[H\033[2J");
