@@ -2,7 +2,6 @@ package me.simulation.players;
 import me.simulation.game.Interaction;
 
 public abstract class Champion implements Interaction {
-    public String race;
     public String type;
     public int level;
     public int maxhp;

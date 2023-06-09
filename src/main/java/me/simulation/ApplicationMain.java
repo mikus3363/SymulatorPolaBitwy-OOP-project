@@ -11,14 +11,20 @@ import me.simulation.players.*;
 public class ApplicationMain {
     public static void main(String[] args) {
         // Teraz mozna dac rozny rozmiar mapy
-        Map map = new Map(8, 8);
+        Map map = new Map(24, 14);
 
+        Scanner scanner = new Scanner(System.in);
         map.placeObjectRandomly(5,5,5,5,5,5);
         map.mapDraw();
-        map.dayCycle();
-        map.mapDraw();
-        map.dayCycle();
-        map.mapDraw();
+
+        while(true) {
+            map.dayCycle();
+            map.mapDraw();
+            map.printStats();
+            System.out.println("Wciśnij ENTER aby kontynuować!");
+            String input = scanner.nextLine();
+            break;
+        }
     }
 
 }

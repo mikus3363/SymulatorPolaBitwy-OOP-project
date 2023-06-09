@@ -2,8 +2,8 @@ package me.simulation.players;
 
 
 public class Ork extends Champion {
-    public Ork(String race, int level,int maxhp, int hp, int strength, int range, int luck,boolean move, boolean has_shield, boolean has_sword, int x_index, int y_index){
-        this.race = race;
+    public Ork(String type, int level,int maxhp, int hp, int strength, int range, int luck,boolean move, boolean has_shield, boolean has_sword, int x_index, int y_index){
+        this.type = type;
         this.level = level;
         this.maxhp = maxhp;
         this.hp = hp;

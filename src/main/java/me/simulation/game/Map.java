@@ -12,6 +12,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
+    int numberOfObjects = 0;
+    int numberOfOrks = 0;
+    int numberOfElfs = 0;
+    int numberOfHumans = 0;
+    int numberOfChests = 0;
+    int numberOfItems = 0;
+    int numberOfPotions = 0;
+    int numberOfOrksKilled = 0;
+    int numberOfElfsKilled = 0;
+    int numberOfHumansKilled = 0;
     public int width;
     public int height;
     ArrayList<ArrayList<Champion>> map;
@@ -105,47 +115,47 @@ public class Map {
     }
 
     public void mapDraw(){
-        System.out.print("╔");
-        for (int i = 0 ; i < map.size(); i++ ) {
+        System.out.print("\u001B[30m╔");
+        for (int i = 0 ; i < width; i++ ) {
             System.out.print("═══");
         }
-        System.out.print("╗");
+        System.out.print("╗\u001B[0m");
         System.out.println();
 
         for (ArrayList<Champion> champions : map) {
-            System.out.print("║");
+            System.out.print("\u001B[30m║\u001B[0m");
             for (Champion champion : champions) {
                 if (champion != null) {
-                    if (champion.race == "ork") {
-                        System.out.print(" O ");
+                    if (champion.type == "ork") {
+                        System.out.print("\u001B[32m O \u001B[0m");
                     }
-                    if (champion.race == "human") {
-                        System.out.print(" H ");
+                    if (champion.type == "human") {
+                        System.out.print("\u001B[34m H \u001B[0m");
                     }
-                    if (champion.race == "elf") {
-                        System.out.print(" E ");
+                    if (champion.type == "elf") {
+                        System.out.print("\u001B[33m E \u001B[0m");
                     }
                     if (champion.type == "potion") {
-                        System.out.print(" p ");
+                        System.out.print("\u001B[37m p \u001B[0m");
                     }
                     if (champion.type == "item") {
-                        System.out.print(" i ");
+                        System.out.print("\u001B[37m i \u001B[0m");
                     }
                     if (champion.type == "chest") {
-                        System.out.print(" c ");
+                        System.out.print("\u001B[37m c \u001B[0m");
                     }
                 } else {
                     System.out.print("   ");
                 }
             }
-            System.out.print("║");
+            System.out.print("\u001B[30m║\u001B[0m");
             System.out.print("\n");
         }
-        System.out.print("╚");
+        System.out.print("\u001B[30m╚");
         for (int i = 0 ; i < width; i++ ) {
             System.out.print("═══");
         }
-        System.out.print("╝");
+        System.out.print("╝\u001B[0m");
         System.out.println();
     }
     public void dayCycle(){
@@ -160,46 +170,62 @@ public class Map {
                         Champion champ = list.get(i).get(j);
                         int randommove = generator.nextInt(4);//zawsze sie rusza, warunki mało zdrowia zawsze 0
                         switch (randommove){
-                            case 0://stój w miejscu
-                                break;
-                            case 1://ruch w prawo
-                                if(j + 1 > 10){//ściana
-                                    map.get(i).set(j,null);
-                                    map.get(i).set(j - 1,champ);
+                            //case 0://stój w miejscu
+                               // break;
+                            case 0://ruch w prawo
+                                if(j + 1 > width-1){//ściana
+                                    if(map.get(i).get(j - 1) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i).set(j - 1,champ);
+                                    }
                                 }
                                 else {
-                                    map.get(i).set(j,null);
-                                    map.get(i).set(j + 1,champ);
+                                    if(map.get(i).get(j + 1) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i).set(j + 1,champ);
+                                    }
                                 }
                                 break;
-                            case 2://ruch w lewo
+                            case 1://ruch w lewo
                                 if(j - 1 < 0){//ściana
-                                    map.get(i).set(j,null);
-                                    map.get(i).set(j + 1,champ);
+                                    if(map.get(i).get(j + 1) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i).set(j + 1,champ);
+                                    }
                                 }
                                 else {
-                                    map.get(i).set(j,null);
-                                    map.get(i).set(j - 1,champ);
+                                    if(map.get(i).get(j - 1) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i).set(j - 1,champ);
+                                    }
                                 }
                                 break;
-                            case 3://ruch do góry
+                            case 2://ruch do góry
                                 if(i - 1 < 0){//ściana
-                                    map.get(i).set(j,null);
-                                    map.get(i + 1).set(j,champ);
+                                    if(map.get(i+1).get(j) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i + 1).set(j,champ);
+                                    }
                                 }
                                 else {
-                                    map.get(i).set(j,null);
-                                    map.get(i - 1).set(j,champ);
+                                    if(map.get(i - 1).get(j) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i - 1).set(j,champ);
+                                    }
                                 }
                                 break;
-                            case 4://ruch w dół
-                                if(i + 1 > 10){//ściana
-                                    map.get(i).set(j,null);
-                                    map.get(i - 1).set(j,champ);
+                            case 3://ruch w dół
+                                if(i + 1 > height-1){//ściana
+                                    if(map.get(i - 1).get(j) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i - 1).set(j,champ);
+                                    }
                                 }
                                 else {
-                                    map.get(i).set(j,null);
-                                    map.get(i + 1).set(j,champ);
+                                    if(map.get(i+1).get(j) == null){
+                                        map.get(i).set(j,null);
+                                        map.get(i + 1).set(j,champ);
+                                    }
                                 }
                                 break;
                         }
@@ -210,11 +236,56 @@ public class Map {
         for (int i = 0 ; i < height; i++ ) {
             for (int j = 0; j < width; j++) {
                 if (list.get(i).get(j) != null) {
-                    list.get(i).get(j).move = true;
+                    numberOfObjects++;
+                    switch (list.get(i).get(j).type){
+                        case "ork":
+                            if(list.get(i).get(j).hp >= (list.get(i).get(j).maxhp / 3)) {
+                                list.get(i).get(j).move = true;
+                            }
+                            numberOfOrks++;
+                            break;
+                        case "elf":
+                            if(list.get(i).get(j).hp >= (list.get(i).get(j).maxhp / 3)) {
+                                list.get(i).get(j).move = true;
+                            }
+                            numberOfElfs++;
+                            break;
+                        case "human":
+                            if(list.get(i).get(j).hp >= (list.get(i).get(j).maxhp / 3)) {
+                                list.get(i).get(j).move = true;
+                            }
+                            numberOfHumans++;
+                            break;
+                        case "chest":
+                            list.get(i).get(j).move = false;
+                            numberOfChests++;
+                            break;
+                        case "potion":
+                            list.get(i).get(j).move = false;
+                            numberOfPotions++;
+                            break;
+                        case "item":
+                            list.get(i).get(j).move = false;
+                            numberOfItems++;
+                            break;
+
+                    }
                 }
             }
         }
     }
+
+    public void printStats(){
+        String wall = "\u001B[30m║\u001B[37m";
+        System.out.println("\u001B[30m╔");
+        System.out.println(wall+" ALL:"+numberOfObjects);
+        System.out.println(wall+" \u001B[32mORK\u001B[37m:"+numberOfOrks+"\t\t Dead:"+numberOfOrksKilled);
+        System.out.println(wall+" \u001B[33mELF\u001B[37m:"+numberOfElfs+"\t\t Dead:"+numberOfElfsKilled);
+        System.out.println(wall+" \u001B[34mHUMAN\u001B[37m:"+numberOfHumans+"\t Dead:"+numberOfHumansKilled);
+        System.out.println(wall+" CHEST:"+numberOfChests+"\t POTION:"+numberOfPotions+"\t ITEMS:"+numberOfItems);
+        System.out.println("\u001B[30m╚\u001B[0m");
+    }
+
     public static void clear(){
         System.out.print("\033[H\033[2J");
         System.out.flush();

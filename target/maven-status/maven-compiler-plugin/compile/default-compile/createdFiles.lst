@@ -1,0 +1,12 @@
+me\simulation\players\Elf.class
+me\simulation\SuperStart.class
+me\simulation\players\Human.class
+me\simulation\equipments\Chest.class
+me\simulation\ApplicationMain.class
+me\simulation\equipments\Kit.class
+me\simulation\equipments\Potion.class
+me\simulation\players\Ork.class
+me\simulation\game\Map.class
+me\simulation\equipments\Item.class
+me\simulation\game\Interaction.class
+me\simulation\players\Champion.class
