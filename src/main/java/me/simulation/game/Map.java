@@ -51,13 +51,21 @@ public class Map {
     }
 
     public void placeObjectRandomly(int howMuchOrk, int howMuchHuman, int howMuchElf, int howMuchChest, int howMuchItem, int howMuchPotion){
+        numberOfObjects = howMuchOrk+howMuchHuman+howMuchElf+howMuchChest+howMuchItem+howMuchPotion;
+        numberOfOrks = howMuchOrk;
+        numberOfHumans = howMuchHuman;
+        numberOfElfs = howMuchElf;
+        numberOfPotions = howMuchPotion;
+        numberOfChests = howMuchChest;
+        numberOfItems = howMuchItem;
+
         int i;
         i = 0;
         while(i < howMuchOrk) {
             int rand1 = (int) (Math.random() * (height));
             int rand2 = (int) (Math.random() * (width));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Ork("ork", 5, 20,20, 10, 1, 0,true, false, false, rand1, rand2));
+                map.get(rand1).set(rand2, new Ork("ork", 1, 30,30, 20, 1, 1,true, false, false, rand1, rand2));
                 i++;
             }
         }
@@ -67,7 +75,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Human("human", 5, 20,20, 10, 1, 0,true, false, false, rand1, rand2));
+                map.get(rand1).set(rand2, new Human("human", 1, 15,10, 10, 2, 5,true, false, false, rand1, rand2));
                 i++;
             }
         }
@@ -77,7 +85,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Elf("elf", 5, 20,20, 10, 1, 0,true, false, false, rand1, rand2));
+                map.get(rand1).set(rand2, new Elf("elf", 1, 20,20, 15, 3, 3,true, false, false, rand1, rand2));
                 i++;
             }
         }
@@ -126,23 +134,25 @@ public class Map {
             System.out.print("\u001B[30m║\u001B[0m");
             for (Champion champion : champions) {
                 if (champion != null) {
-                    if (champion.type == "ork") {
-                        System.out.print("\u001B[32m O \u001B[0m");
-                    }
-                    if (champion.type == "human") {
-                        System.out.print("\u001B[34m H \u001B[0m");
-                    }
-                    if (champion.type == "elf") {
-                        System.out.print("\u001B[33m E \u001B[0m");
-                    }
-                    if (champion.type == "potion") {
-                        System.out.print("\u001B[37m p \u001B[0m");
-                    }
-                    if (champion.type == "item") {
-                        System.out.print("\u001B[37m i \u001B[0m");
-                    }
-                    if (champion.type == "chest") {
-                        System.out.print("\u001B[37m c \u001B[0m");
+                    switch (champion.type){
+                        case "ork":
+                            System.out.print("\u001B[32m O \u001B[0m");
+                            break;
+                        case "human":
+                            System.out.print("\u001B[34m H \u001B[0m");
+                            break;
+                        case "elf":
+                            System.out.print("\u001B[33m E \u001B[0m");
+                            break;
+                        case "potion":
+                            System.out.print("\u001B[37m p \u001B[0m");
+                            break;
+                        case "chest":
+                            System.out.print("\u001B[37m i \u001B[0m");
+                            break;
+                        case "item":
+                            System.out.print("\u001B[37m c \u001B[0m");
+                            break;
                     }
                 } else {
                     System.out.print("   ");
@@ -236,37 +246,14 @@ public class Map {
         for (int i = 0 ; i < height; i++ ) {
             for (int j = 0; j < width; j++) {
                 if (list.get(i).get(j) != null) {
-                    numberOfObjects++;
                     switch (list.get(i).get(j).type){
-                        case "ork":
+                        case "ork", "elf", "human":
                             if(list.get(i).get(j).hp >= (list.get(i).get(j).maxhp / 3)) {
                                 list.get(i).get(j).move = true;
                             }
-                            numberOfOrks++;
                             break;
-                        case "elf":
-                            if(list.get(i).get(j).hp >= (list.get(i).get(j).maxhp / 3)) {
-                                list.get(i).get(j).move = true;
-                            }
-                            numberOfElfs++;
-                            break;
-                        case "human":
-                            if(list.get(i).get(j).hp >= (list.get(i).get(j).maxhp / 3)) {
-                                list.get(i).get(j).move = true;
-                            }
-                            numberOfHumans++;
-                            break;
-                        case "chest":
+                        case "chest", "potion", "item":
                             list.get(i).get(j).move = false;
-                            numberOfChests++;
-                            break;
-                        case "potion":
-                            list.get(i).get(j).move = false;
-                            numberOfPotions++;
-                            break;
-                        case "item":
-                            list.get(i).get(j).move = false;
-                            numberOfItems++;
                             break;
 
                     }
@@ -287,8 +274,17 @@ public class Map {
     }
 
     public static void clear(){
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                Runtime.getRuntime().exec("clear");
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
