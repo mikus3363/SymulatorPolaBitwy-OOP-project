@@ -65,7 +65,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height));
             int rand2 = (int) (Math.random() * (width));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Ork("ork", 1, 30,30, 20, 1, 1,true, false, false, rand1, rand2));
+                map.get(rand1).set(rand2, new Ork("ork", 1, 30,30, 20, 1, 1,true, false, false, rand2, rand1));
                 i++;
             }
         }
@@ -75,7 +75,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Human("human", 1, 15,10, 10, 2, 5,true, false, false, rand1, rand2));
+                map.get(rand1).set(rand2, new Human("human", 1, 15,10, 10, 2, 5,true, false, false, rand2, rand1));
                 i++;
             }
         }
@@ -85,7 +85,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Elf("elf", 1, 20,20, 15, 3, 3,true, false, false, rand1, rand2));
+                map.get(rand1).set(rand2, new Elf("elf", 1, 20,20, 15, 3, 3,true, false, false, rand2, rand1));
                 i++;
             }
         }
@@ -95,7 +95,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Chest("chest", rand1, rand2));
+                map.get(rand1).set(rand2, new Chest("chest", rand2, rand1));
                 i++;
             }
         }
@@ -105,7 +105,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Item("item", rand1, rand2));
+                map.get(rand1).set(rand2, new Item("item", rand2, rand1));
                 i++;
             }
         }
@@ -115,7 +115,7 @@ public class Map {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if(map.get(rand1).get(rand2)==null){
-                map.get(rand1).set(rand2, new Potion("potion", rand1, rand2));
+                map.get(rand1).set(rand2, new Potion("potion", rand2, rand1));
                 i++;
             }
         }
@@ -148,10 +148,10 @@ public class Map {
                             System.out.print("\u001B[37m p \u001B[0m");
                             break;
                         case "chest":
-                            System.out.print("\u001B[37m i \u001B[0m");
+                            System.out.print("\u001B[37m c \u001B[0m");
                             break;
                         case "item":
-                            System.out.print("\u001B[37m c \u001B[0m");
+                            System.out.print("\u001B[37m i \u001B[0m");
                             break;
                     }
                 } else {
@@ -179,62 +179,87 @@ public class Map {
                         Random generator = new Random();
                         Champion champ = list.get(i).get(j);
                         int randommove = generator.nextInt(4);//zawsze sie rusza, warunki mało zdrowia zawsze 0
+                        Champion opponent;
                         switch (randommove){
                             //case 0://stój w miejscu
                                // break;
                             case 0://ruch w prawo
                                 if(j + 1 > width-1){//ściana
-                                    if(map.get(i).get(j - 1) == null){
+                                    if((opponent = map.get(i).get(j - 1)) == null){
+                                        champ.newIndex(i,j-1);
                                         map.get(i).set(j,null);
                                         map.get(i).set(j - 1,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 else {
-                                    if(map.get(i).get(j + 1) == null){
+                                    if((opponent = map.get(i).get(j + 1)) == null){
+                                        champ.newIndex(i,j+1);
                                         map.get(i).set(j,null);
                                         map.get(i).set(j + 1,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 break;
                             case 1://ruch w lewo
                                 if(j - 1 < 0){//ściana
-                                    if(map.get(i).get(j + 1) == null){
+                                    if((opponent = map.get(i).get(j + 1)) == null){
+                                        champ.newIndex(i,j+1);
                                         map.get(i).set(j,null);
                                         map.get(i).set(j + 1,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 else {
-                                    if(map.get(i).get(j - 1) == null){
+                                    if((opponent = map.get(i).get(j - 1)) == null){
+                                        champ.newIndex(i,j-1);
                                         map.get(i).set(j,null);
                                         map.get(i).set(j - 1,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 break;
                             case 2://ruch do góry
                                 if(i - 1 < 0){//ściana
-                                    if(map.get(i+1).get(j) == null){
+                                    if((opponent = map.get(i+1).get(j)) == null){
+                                        champ.newIndex(i+1,j);
                                         map.get(i).set(j,null);
                                         map.get(i + 1).set(j,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 else {
-                                    if(map.get(i - 1).get(j) == null){
+                                    if((opponent = map.get(i - 1).get(j)) == null){
+                                        champ.newIndex(i-1,j);
                                         map.get(i).set(j,null);
                                         map.get(i - 1).set(j,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 break;
                             case 3://ruch w dół
                                 if(i + 1 > height-1){//ściana
-                                    if(map.get(i - 1).get(j) == null){
+                                    if((opponent = map.get(i - 1).get(j)) == null){
+                                        champ.newIndex(i-1,j);
                                         map.get(i).set(j,null);
                                         map.get(i - 1).set(j,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 else {
-                                    if(map.get(i+1).get(j) == null){
+                                    if((opponent = map.get(i+1).get(j)) == null){
+                                        champ.newIndex(i+1,j);
                                         map.get(i).set(j,null);
                                         map.get(i + 1).set(j,champ);
+                                    } else {
+                                        interaction(champ, opponent);
                                     }
                                 }
                                 break;
@@ -271,6 +296,69 @@ public class Map {
         System.out.println(wall+" \u001B[34mHUMAN\u001B[37m:"+numberOfHumans+"\t Dead:"+numberOfHumansKilled);
         System.out.println(wall+" CHEST:"+numberOfChests+"\t POTION:"+numberOfPotions+"\t ITEMS:"+numberOfItems);
         System.out.println("\u001B[30m╚\u001B[0m");
+    }
+
+    public void interaction(Champion champ, Champion opponent){
+        switch (opponent.type){
+            case "ork","human","elf":
+                if (champ.type==opponent.type){
+                    champ.level++;
+                    opponent.level++;
+                } else {
+                    if(champ.level>=opponent.level){
+                        mapDelete(opponent.y_index, opponent.x_index);
+                        switch (opponent.type) {
+                            case "ork":
+                                numberOfOrks--;
+                                numberOfOrksKilled++;
+                                break;
+                            case "human":
+                                numberOfHumans--;
+                                numberOfHumansKilled++;
+                                break;
+                            case "elf":
+                                numberOfElfs--;
+                                numberOfElfsKilled++;
+                                break;
+                        }
+                    } else {
+                        mapDelete(champ.y_index, champ.x_index);
+                        switch (champ.type) {
+                            case "ork":
+                                numberOfOrks--;
+                                numberOfOrksKilled++;
+                                break;
+                            case "human":
+                                numberOfHumans--;
+                                numberOfHumansKilled++;
+                                break;
+                            case "elf":
+                                numberOfElfs--;
+                                numberOfElfsKilled++;
+                                break;
+                        }
+                    }
+                }
+                break;
+            case "item","chest","potion":
+                mapDelete(opponent.y_index, opponent.x_index);
+                switch (opponent.type){
+                    case "item":
+                        numberOfItems--;
+                        break;
+                    case "chest":
+                        numberOfChests--;
+                        break;
+                    case "potion":
+                        numberOfPotions--;
+                        break;
+                }
+                break;
+        }
+    }
+
+    public void mapDelete(int yIndex, int xIndex){
+        map.get(yIndex).set(xIndex, null);
     }
 
     public static void clear(){

@@ -23,6 +23,11 @@ public abstract class Champion implements Interaction {
         return y_index;
     }
 
+    public void newIndex(int newY, int newX){
+       this.x_index = newX;
+       this.y_index = newY;
+    }
+
 
 
 }

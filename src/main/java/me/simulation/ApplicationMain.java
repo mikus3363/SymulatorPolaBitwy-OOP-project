@@ -16,7 +16,7 @@ public class ApplicationMain {
         Map map = new Map(24, 14);
 
         Scanner scanner = new Scanner(System.in);
-        map.placeObjectRandomly(5,5,5,5,5,5);
+        map.placeObjectRandomly(5,10,8,5,5,5);
 
         while(true) {
             map.dayCycle();
@@ -25,7 +25,7 @@ public class ApplicationMain {
             //Map.clear();
             //System.out.println("Wciśnij ENTER aby kontynuować!");
             //String input = scanner.nextLine();
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
         }
     }
 
