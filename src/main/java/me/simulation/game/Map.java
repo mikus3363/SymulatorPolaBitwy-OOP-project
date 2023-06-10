@@ -134,6 +134,7 @@ public class Map {
             System.out.print("\u001B[30m║\u001B[0m");
             for (Champion champion : champions) {
                 if (champion != null) {
+                    // Zamieniłem IFY na Switcha dla lepszej wydajności
                     switch (champion.type){
                         case "ork":
                             System.out.print("\u001B[32m O \u001B[0m");
@@ -171,6 +172,7 @@ public class Map {
     public void dayCycle(){
         ArrayList<ArrayList<Champion>> list = map;
 
+        // Metoda odpowiedzialna za poruszanie sie obiektow
         for (int i = 0 ; i < height; i++ ) {
             for (int j = 0 ; j < width; j++ ) {
                 if(list.get(i).get(j) != null){
@@ -181,18 +183,21 @@ public class Map {
                         int randommove = generator.nextInt(4);//zawsze sie rusza, warunki mało zdrowia zawsze 0
                         Champion opponent;
                         switch (randommove){
+                            //Na razie wylaczylem opcje stania w miejscu
                             //case 0://stój w miejscu
                                // break;
                             case 0://ruch w prawo
                                 if(j + 1 > width-1){//ściana
-                                    if((opponent = map.get(i).get(j - 1)) == null){
+                                    if((opponent = map.get(i).get(j - 1)) == null){ // <- TO jest jednoczeście przypisanie do opponent oraz sprawdzenie warunku
                                         champ.newIndex(i,j-1);
                                         map.get(i).set(j,null);
                                         map.get(i).set(j - 1,champ);
                                     } else {
+                                        // Jezeli miejsce jest zajete to miedzy tymi dwoma obiektami dochodzi do interakcji
                                         interaction(champ, opponent);
                                     }
                                 }
+                                // I dalej to samo
                                 else {
                                     if((opponent = map.get(i).get(j + 1)) == null){
                                         champ.newIndex(i,j+1);
@@ -288,6 +293,8 @@ public class Map {
     }
 
     public void printStats(){
+        // wypisuje aktualne statystyki mapy
+        // wraz z kolorami
         String wall = "\u001B[30m║\u001B[37m";
         System.out.println("\u001B[30m╔");
         System.out.println(wall+" ALL:"+numberOfObjects);
@@ -298,14 +305,19 @@ public class Map {
         System.out.println("\u001B[30m╚\u001B[0m");
     }
 
+    // Metoda interakcji która powinna się znaleść w Interface Interakcji
     public void interaction(Champion champ, Champion opponent){
+        // Metoda przyjmuje championa (obiekt ktory wykonuje krok) oraz opponenta (obiekt kory stoi w miejscu na kore chial by wejsc champ)
         switch (opponent.type){
+            // jezeli jest to inny ork, human, elf wykonuje sie FIGHT
             case "ork","human","elf":
                 if (champ.type==opponent.type){
                     champ.level++;
                     opponent.level++;
                 } else {
                     if(champ.level>=opponent.level){
+                        // Prosta implementacjia metody FIGHT
+                        // oraz aktualizacjia statow mapy
                         mapDelete(opponent.y_index, opponent.x_index);
                         switch (opponent.type) {
                             case "ork":
@@ -341,6 +353,7 @@ public class Map {
                 }
                 break;
             case "item","chest","potion":
+                // jezeli jest jakis KIT to mamy narazie doczynienia jedynie z "pochlonieciem" tego ubiektu
                 mapDelete(opponent.y_index, opponent.x_index);
                 switch (opponent.type){
                     case "item":
@@ -357,10 +370,12 @@ public class Map {
         }
     }
 
+    // To najzwyczajniej w świecie usuwa obiekt z macierzy
     public void mapDelete(int yIndex, int xIndex){
         map.get(yIndex).set(xIndex, null);
     }
 
+    // To powinno w przyszłości czyścić konsole
     public static void clear(){
         try {
             if (System.getProperty("os.name").contains("Windows")) {
