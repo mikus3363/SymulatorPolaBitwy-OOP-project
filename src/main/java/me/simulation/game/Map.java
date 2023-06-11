@@ -123,7 +123,7 @@ public class Map {
     }
 
     public void mapDraw(){
-        System.out.print("\u001B[30m╔");
+        System.out.print("\u001B[90m╔");
         for (int i = 0 ; i < width; i++ ) {
             System.out.print("═══");
         }
@@ -131,7 +131,7 @@ public class Map {
         System.out.println();
 
         for (ArrayList<Champion> champions : map) {
-            System.out.print("\u001B[30m║\u001B[0m");
+            System.out.print("\u001B[90m║\u001B[0m");
             for (Champion champion : champions) {
                 if (champion != null) {
                     // Zamieniłem IFY na Switcha dla lepszej wydajności
@@ -159,10 +159,10 @@ public class Map {
                     System.out.print("   ");
                 }
             }
-            System.out.print("\u001B[30m║\u001B[0m");
+            System.out.print("\u001B[90m║\u001B[0m");
             System.out.print("\n");
         }
-        System.out.print("\u001B[30m╚");
+        System.out.print("\u001B[90m╚");
         for (int i = 0 ; i < width; i++ ) {
             System.out.print("═══");
         }
@@ -295,14 +295,17 @@ public class Map {
     public void printStats(){
         // wypisuje aktualne statystyki mapy
         // wraz z kolorami
-        String wall = "\u001B[30m║\u001B[37m";
-        System.out.println("\u001B[30m╔");
+        String wall = "\u001B[90m║\u001B[37m";
+        System.out.println("\u001B[90m╔");
         System.out.println(wall+" ALL:"+numberOfObjects);
         System.out.println(wall+" \u001B[32mORK\u001B[37m:"+numberOfOrks+"\t\t Dead:"+numberOfOrksKilled);
         System.out.println(wall+" \u001B[33mELF\u001B[37m:"+numberOfElfs+"\t\t Dead:"+numberOfElfsKilled);
         System.out.println(wall+" \u001B[34mHUMAN\u001B[37m:"+numberOfHumans+"\t Dead:"+numberOfHumansKilled);
         System.out.println(wall+" CHEST:"+numberOfChests+"\t POTION:"+numberOfPotions+"\t ITEMS:"+numberOfItems);
-        System.out.println("\u001B[30m╚\u001B[0m");
+        System.out.println("\u001B[90m╚\u001B[0m");
+        System.out.println("\u001B[90m╔");
+        System.out.println(wall+" Event Table");
+        System.out.println("\u001B[90m╚\u001B[0m");
     }
 
     // Metoda interakcji która powinna się znaleść w Interface Interakcji
