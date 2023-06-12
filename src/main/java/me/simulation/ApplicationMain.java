@@ -25,13 +25,19 @@ public class ApplicationMain {
         Map map = new Map(width, height);
 
         map.placeObjectRandomly(5,10,8,5,5,5);
+        map.mapDraw();//początkowe zaznajomienie użytkownika z mapą
+        map.printStats();
+        TimeUnit.SECONDS.sleep(1);
 
-        while(true) {
+        System.out.println("");
+        int loop=1;
+        while(loop==1) {
             Map.clear();
             System.out.println("");
             map.dayCycle();
             map.mapDraw();
             map.printStats();
+            loop = map.ifend();
             TimeUnit.SECONDS.sleep(1);
         }
     }
