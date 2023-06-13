@@ -317,12 +317,22 @@ public class Map {
             // jezeli jest to inny ork, human, elf wykonuje sie FIGHT
             case "ork", "human", "elf":
                 if (champ.type == opponent.type) {
-                    champ.level++;
+                    //champ.level++;
                     opponent.level++;
                 } else {
-                    if (champ.level >= opponent.level) {
-                        // Prosta implementacjia metody FIGHT
-                        // oraz aktualizacjia statow mapy
+                    // Prosta implementacjia metody FIGHT
+                    // oraz aktualizacjia statow mapy
+                    int iterator = 1;
+                    while (champ.hp>0 & opponent.hp>0){
+                        if(iterator%2==1){
+                            opponent.hp -= (champ.strength*champ.level)/2;
+                        } else {
+                            champ.hp -= (opponent.strength*opponent.level)/2;
+                        }
+                        iterator++;
+                    }
+
+                    if(opponent.hp<=0){
                         mapDelete(champ.y_index, champ.x_index);
                         champ.newIndex(opponent.y_index, opponent.x_index);
                         mapDelete(opponent.y_index, opponent.x_index);
@@ -341,7 +351,7 @@ public class Map {
                                 numberOfElfsKilled++;
                                 break;
                         }
-                    } else {
+                    } else if(champ.hp<=0) {
                         mapDelete(champ.y_index, champ.x_index);
                         switch (champ.type) {
                             case "ork":
@@ -401,20 +411,27 @@ public class Map {
         }
     }
 
-    public int ifend() {
+    public boolean ifend() {
+        String wall = "\u001B[90m║\u001B[37m";
         if (numberOfElfs == 0 && numberOfHumans == 0) {
-            System.out.println("Orki podbiły pole bitwy!!!!!!!!!!!");
-            return 0;
+            System.out.println("\u001B[90m╔");
+            System.out.println(wall+" \u001B[32mpodbiły pole bitwy!");
+            System.out.println("\u001B[90m╚\u001B[0m");
+            return false;
         }
         if (numberOfElfs == 0 && numberOfOrks == 0) {
-            System.out.println("Ludzie podbili pole bitwy!!!!!!!!!!!");
-            return 0;
+            System.out.println("\u001B[90m╔");
+            System.out.println(wall+" \u001B[34mLudzie podbili pole bitwy!");
+            System.out.println("\u001B[90m╚\u001B[0m");
+            return false;
         }
         if (numberOfOrks == 0 && numberOfHumans == 0) {
-            System.out.println("Elfy podbiły pole bitwy!!!!!!!!!!!");
-            return 0;
+            System.out.println("\u001B[90m╔");
+            System.out.println(wall+" \u001B[33mElfy podbiły pole bitwy!");
+            System.out.println("\u001B[90m╚\u001B[0m");
+            return false;
         }
-        return 1;
+        return true;
 
     }
 }

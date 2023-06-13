@@ -30,14 +30,12 @@ public class ApplicationMain {
         TimeUnit.SECONDS.sleep(1);
 
         System.out.println("");
-        int loop=1;
-        while(loop==1) {
+        while(map.ifend()) {
             Map.clear();
             System.out.println("");
             map.dayCycle();
             map.mapDraw();
             map.printStats();
-            loop = map.ifend();
             TimeUnit.SECONDS.sleep(1);
         }
     }
