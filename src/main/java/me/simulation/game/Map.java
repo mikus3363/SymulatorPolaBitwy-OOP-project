@@ -12,29 +12,29 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
-    int numberOfObjects = 0;
-    int numberOfOrks = 0;
-    int numberOfElfs = 0;
-    int numberOfHumans = 0;
-    int numberOfChests = 0;
-    int numberOfItems = 0;
-    int numberOfPotions = 0;
-    int numberOfOrksKilled = 0;
-    int numberOfElfsKilled = 0;
-    int numberOfHumansKilled = 0;
-    public int width;
-    public int height;
+    private int numberOfObjects = 0;
+    private int numberOfOrks = 0;
+    private int numberOfElfs = 0;
+    private int numberOfHumans = 0;
+    private int numberOfChests = 0;
+    private int numberOfItems = 0;
+    private int numberOfPotions = 0;
+    private int numberOfOrksKilled = 0;
+    private int numberOfElfsKilled = 0;
+    private int numberOfHumansKilled = 0;
+    private int width;
+    private int height;
     ArrayList<ArrayList<Champion>> map;
 
     public ArrayList<ArrayList<Champion>> getMap() {
         return map;
     }
 
-    public int getWidth() {
+    private int getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    private int getHeight() {
         return height;
     }
 
@@ -299,7 +299,8 @@ public class Map {
         // wraz z kolorami
         String wall = "\u001B[90m║\u001B[37m";
         System.out.println("\u001B[90m╔");
-        System.out.println(wall + " ALL:" + numberOfObjects);
+        int all = numberOfObjects-numberOfElfsKilled-numberOfHumansKilled-numberOfOrksKilled;
+        System.out.println(wall + " ALL:" + all);
         System.out.println(wall + " \u001B[32mORK\u001B[37m:" + numberOfOrks + "\t\t Dead:" + numberOfOrksKilled);
         System.out.println(wall + " \u001B[33mELF\u001B[37m:" + numberOfElfs + "\t\t Dead:" + numberOfElfsKilled);
         System.out.println(wall + " \u001B[34mHUMAN\u001B[37m:" + numberOfHumans + "\t Dead:" + numberOfHumansKilled);
@@ -311,7 +312,7 @@ public class Map {
     }
 
     // Metoda interakcji która powinna się znaleść w Interface Interakcji
-    public void interaction(Champion champ, Champion opponent) {
+    private void interaction(Champion champ, Champion opponent) {
         // Metoda przyjmuje championa (obiekt ktory wykonuje krok) oraz opponenta (obiekt kory stoi w miejscu na kore chial by wejsc champ)
         switch (opponent.type) {
             // jezeli jest to inny ork, human, elf wykonuje sie FIGHT
@@ -392,7 +393,7 @@ public class Map {
     }
 
     // To najzwyczajniej w świecie usuwa obiekt z macierzy
-    public void mapDelete(int yIndex, int xIndex) {
+    private void mapDelete(int yIndex, int xIndex) {
         map.get(yIndex).set(xIndex, null);
     }
 
