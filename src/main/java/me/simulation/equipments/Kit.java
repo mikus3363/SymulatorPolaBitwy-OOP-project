@@ -5,12 +5,7 @@ import me.simulation.players.Champion;
 
 
 public abstract class Kit extends Champion implements Interaction {
-    int cos;
-    public int getX_index(){
-        return x_index;
+    public Kit(String type, int x_index, int y_index) {
+        super(type, x_index, y_index);
     }
-    public int getY_index(){
-        return y_index;
-    }
-
 }

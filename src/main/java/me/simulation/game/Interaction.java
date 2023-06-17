@@ -5,13 +5,12 @@ import me.simulation.players.Champion;
 import java.util.ArrayList;
 
 public interface Interaction {
-    //public void interaction();
-    default void newIndex(int newY, int newX){
-    }
-    default int getXIndex(){
+    void setMove(boolean value);
+    default void newIndex(int newY, int newX){}
+    default int getX_index(){
         return 1;
     }
-    default int getYIndex(){
+    default int getY_index(){
         return 1;
     }
     default int getHp(){
@@ -22,5 +21,29 @@ public interface Interaction {
     }
     default int getLvl(){
         return 1;
+    }
+    default int getStrength() {
+        return 1;
+    }
+    default int getRange() {
+        return 1;
+    }
+    default String getType(){
+        return "default";
+    }
+    default int getLuck() {
+        return 1;
+    }
+    default int getLevel() {
+        return 1;
+    }
+    default boolean getMove() {
+        return false;
+    }
+    default boolean getSword() {
+        return false;
+    }
+    default boolean getSchield() {
+        return false;
     }
 }

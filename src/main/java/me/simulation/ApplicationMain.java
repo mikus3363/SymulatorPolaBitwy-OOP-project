@@ -1,25 +1,23 @@
 package me.simulation;
 
-import java.math.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import me.simulation.equipments.*;
-import me.simulation.game.*;
 import me.simulation.game.Map;
-import me.simulation.players.*;
 
-//test git
 public class ApplicationMain {
     public static void main(String[] args) throws InterruptedException {
+        // Wartości początkowe
+        int width, height, howMuchOrk, howMuchHuman, howMuchElf, howMuchChest, howMuchItem, howMuchPotion;
+
         // Teraz mozna dac rozny rozmiar mapy
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Rekomendowane wymiary mapy to od 12 do 24 dla obu parametrow");
         System.out.print("Podaj szerokość mapy:\u001B[32m");
-        int width = scanner.nextInt();
+        width = scanner.nextInt();
         System.out.print("\u001B[0mPodaj wysokość mapy:\u001B[32m");
-        int height = scanner.nextInt();
+        height = scanner.nextInt();
         System.out.print("\u001B[0m");
 
         Map map = new Map(width, height);
@@ -29,10 +27,10 @@ public class ApplicationMain {
         map.printStats();
         TimeUnit.SECONDS.sleep(1);
 
-        System.out.println("");
+        System.out.println();
         while(map.ifend()) {
             Map.clear();
-            System.out.println("");
+            System.out.println();
             map.dayCycle();
             map.mapDraw();
             map.printStats();
@@ -40,5 +38,3 @@ public class ApplicationMain {
         }
     }
 }
-
-
