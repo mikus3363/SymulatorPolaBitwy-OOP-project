@@ -6,11 +6,15 @@ import java.util.concurrent.TimeUnit;
 import me.simulation.game.Map;
 
 public class ApplicationMain {
+    /**
+     * Main method to start the simulation application.
+     *
+     * @param args command-line arguments
+     * @throws InterruptedException if the thread is interrupted
+     */
     public static void main(String[] args) throws InterruptedException {
-        // Wartości początkowe
         int width, height, howMuchOrk, howMuchHuman, howMuchElf, howMuchChest, howMuchItem, howMuchPotion;
 
-        // Teraz mozna dac rozny rozmiar mapy
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Rekomendowane wymiary mapy to od 12 do 24 dla obu parametrow");
@@ -23,7 +27,7 @@ public class ApplicationMain {
         Map map = new Map(width, height);
 
         map.placeObjectRandomly(5,10,8,5,5,5);
-        map.mapDraw();//początkowe zaznajomienie użytkownika z mapą
+        map.mapDraw();// Initial display of the map
         map.printStats();
         TimeUnit.SECONDS.sleep(1);
 
