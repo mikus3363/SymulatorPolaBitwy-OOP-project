@@ -27,7 +27,7 @@ public class ApplicationMain {
         Map map = new Map(width, height);
 
         map.placeObjectRandomly(5,10,8,5,5,5);
-        map.mapDraw();// Initial display of the map
+        map.mapDraw(); // Initial display of the map
         map.printStats();
         TimeUnit.SECONDS.sleep(1);
 
