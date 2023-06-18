@@ -1,11 +1,14 @@
 # SymulatorPolaBitwy-OOP-project
+
 ## Temat Projektu : „Symulator Pola Bitwy”
 
 ### Skład grupy projektowej:
 
 1. **Patryk Pietrzyk** ( Lider )
-
 2. **Mikołaj Lipiński**
+   
+### Strona:
+[***Strona dokumentacji wygenerowana z JavaDoc !***](https://taki-sobie-typ.github.io/JavaDoc-For-SymulatorPolaBitwy-OOP-project/)
 
 ## Opis zadania:
 Bitwa odbędzie się na polu utworzonym z macierzy 12x12 i będzie przebiegać między trzema
@@ -33,6 +36,6 @@ miecz zwiększający atak lub tarczę na zablokowanie pierwszego kolejnego ataku
 się w monecie kiedy jedna rasa całkowicie zdominuje plansze gry.
 
 ## Diagram Klas:
-![DiagramKlas](DiagramKlas.png)
+![DiagramKlas](DiagramKlasNew.png)
 ## Diagram Obiektów:
 ![DiagramObiektow](DiagramObiektow.png)
