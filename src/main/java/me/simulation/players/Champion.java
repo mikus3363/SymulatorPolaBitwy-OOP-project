@@ -16,13 +16,14 @@ public abstract class Champion implements Interaction {
     private int y_index;
     //public int x_index;
     //public int y_index;
+    private boolean regeneration;
 
     public Champion(String type, int x_index, int y_index){
         this.type = type;
         this.x_index = x_index;
         this.y_index = y_index;
     }
-    public Champion(String type, int level,int maxhp, int hp, int strength, int range, int luck,boolean move, boolean has_shield, boolean has_sword, int x_index, int y_index){
+    public Champion(String type, int level,int maxhp, int hp, int strength, int range, int luck,boolean move, boolean has_shield, boolean has_sword, int x_index, int y_index,boolean regeneration){
         this.type = type;
         this.level = level;
         this.maxhp = maxhp;
@@ -35,6 +36,7 @@ public abstract class Champion implements Interaction {
         this.has_sword = has_sword;
         this.x_index = x_index;
         this.y_index = y_index;
+        this.regeneration = regeneration;
     }
 
     @Override
@@ -75,7 +77,7 @@ public abstract class Champion implements Interaction {
     public int getStrength() {
         return strength;
     }
-
+    public void setStrength(int power){ this.strength = power; }
     @Override
     public int getRange() {
         return range;
@@ -85,12 +87,13 @@ public abstract class Champion implements Interaction {
     public int getLuck() {
         return luck;
     }
-
+    public void setLuck(int luck){ this.luck = luck; }
     @Override
     public int getHp() {
         return hp;
     }
 
+    public void setHp(int change){ this.hp = change; }
     public void takeDMG(int strength, int level, int range, int luck){
         int amount = (strength+level)/(2);
         this.hp -= amount;
@@ -100,7 +103,7 @@ public abstract class Champion implements Interaction {
     public int getMaxHp() {
         return maxhp;
     }
-
+    public void setMaxHp(int maxhp) {this.maxhp = maxhp;}
     @Override
     public int getLevel() {
         return level;
@@ -114,10 +117,15 @@ public abstract class Champion implements Interaction {
     public boolean getSword() {
         return has_sword;
     }
-
+    public void setSword(boolean has_sword){this.has_sword = has_sword;}
     @Override
-    public boolean getSchield() {
+    public boolean getShield() {
         return has_shield;
     }
-
+    public void setShield(boolean has_shield){this.has_shield = has_shield;}
+    @Override
+    public boolean getRegeneration(){
+        return regeneration;
+    }
+    public void setRegeneration(boolean regen){this.regeneration = regen;}
 }

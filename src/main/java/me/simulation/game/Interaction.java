@@ -43,7 +43,10 @@ public interface Interaction {
     default boolean getSword() {
         return false;
     }
-    default boolean getSchield() {
+    default boolean getShield() {
+        return false;
+    }
+    default boolean getRegeneration(){
         return false;
     }
 }
