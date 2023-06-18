@@ -95,7 +95,7 @@ public abstract class Champion implements Interaction {
 
     public void setHp(int change){ this.hp = change; }
     public void takeDMG(int strength, int level, int range, int luck){
-        int amount = (strength+level)/(2);
+        int amount = (strength+level+range)/(3);
         this.hp -= amount;
     }
 

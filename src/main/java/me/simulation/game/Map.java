@@ -320,7 +320,7 @@ public class Map {
                         } else {
                             if(champ.getSword())//ma miecz bije mocniej
                             {
-                                champ.takeDMG(opponent.getStrength()+2, opponent.getLevel(), opponent.getRange(), opponent.getLuck());
+                                champ.takeDMG(opponent.getStrength()+2, opponent.getLevel(), opponent.getRange()+2, opponent.getLuck());
                                 champ.setSword(false);
                             }
                             else {//normalny cios
