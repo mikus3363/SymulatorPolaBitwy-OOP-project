@@ -1,0 +1,112 @@
+@startuml
+
+!theme toy
+top to bottom direction
+skinparam linetype ortho
+
+class ApplicationMain {
+  + ApplicationMain(): 
+  + main(String[]): void
+}
+class Champion {
+  + Champion(String, int, int): 
+  + Champion(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+  - hp: int
+  - x_index: int
+  - move: boolean
+  - level: int
+  - strength: int
+  - y_index: int
+  - luck: int
+  - range: int
+  - type: String
+  + newIndex(int, int): void
+  + takeDMG(int, int, int, int): void
+  + increaseLevel(): void
+   maxHp: int
+   sword: boolean
+   schield: boolean
+   type: String
+   level: int
+   move: boolean
+   strength: int
+   y_index: int
+   x_index: int
+   range: int
+   luck: int
+   hp: int
+}
+class Chest {
+  + Chest(String, int, int): 
+}
+class Elf {
+  + Elf(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+}
+class Human {
+  + Human(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+}
+interface Interaction << interface >> {
+  + newIndex(int, int): void
+   sword: boolean
+   type: String
+   strength: int
+   maxHp: int
+   schield: boolean
+   level: int
+   move: boolean
+   lvl: int
+   y_index: int
+   x_index: int
+   range: int
+   luck: int
+   hp: int
+}
+class Item {
+  + Item(String, int, int): 
+}
+class Kit {
+  + Kit(String, int, int): 
+}
+class Map {
+  + Map(int, int): 
+  - height: int
+  - width: int
+  ~ map: ArrayList<ArrayList<Champion>>
+  - interaction(Champion, Champion): void
+  + mapDraw(): void
+  + placeObjectRandomly(int, int, int, int, int, int): void
+  + dayCycle(): void
+  + ifend(): boolean
+  - toRight(Champion, Champion, int, int): void
+  + printStats(): void
+  - toLeft(Champion, Champion, int, int): void
+  - toUp(Champion, Champion, int, int): void
+  + clear(): void
+  - decreaseStatistics(String): void
+  - mapDelete(int, int): void
+  - toDown(Champion, Champion, int, int): void
+   map: ArrayList<ArrayList<Champion>>
+   height: int
+   width: int
+}
+class Ork {
+  + Ork(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+}
+class Potion {
+  + Potion(String, int, int): 
+}
+class SuperStart {
+  + SuperStart(): 
+  + main(String[]): void
+}
+
+Champion         -[#008200,dashed]-^  Interaction     
+Chest            -[#000082,plain]-^  Kit             
+Elf              -[#000082,plain]-^  Champion        
+Human            -[#000082,plain]-^  Champion        
+Item             -[#000082,plain]-^  Kit             
+Kit              -[#000082,plain]-^  Champion        
+Kit              -[#008200,dashed]-^  Interaction     
+Ork              -[#000082,plain]-^  Champion        
+Potion           -[#000082,plain]-^  Kit             
+@enduml

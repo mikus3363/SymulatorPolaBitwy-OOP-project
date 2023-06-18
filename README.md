@@ -33,6 +33,6 @@ miecz zwiększający atak lub tarczę na zablokowanie pierwszego kolejnego ataku
 się w monecie kiedy jedna rasa całkowicie zdominuje plansze gry.
 
 ## Diagram Klas:
-![DiagramKlas](DiagramKlas.png)
+![DiagramKlas](DiagramKlasNew.png)
 ## Diagram Obiektów:
 ![DiagramObiektow](DiagramObiektow.png)
