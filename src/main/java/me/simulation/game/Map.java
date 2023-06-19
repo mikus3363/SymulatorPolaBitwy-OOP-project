@@ -11,6 +11,10 @@ import me.simulation.players.Ork;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represents a map consisting of champions, chests, items, and potions.
+ * Provides methods to initialize and manipulate the map.
+ */
 public class Map {
     private int numberOfObjects = 0;
     private int numberOfOrks = 0;
@@ -26,6 +30,12 @@ public class Map {
     private final int height;  // The height of the map
     ArrayList<ArrayList<Champion>> map; // The map grid
 
+    /**
+     * Constructs a new Map with the specified dimensions.
+     *
+     * @param width  The width of the map
+     * @param height The height of the map
+     */
     public Map(int width, int height) {
         this.height = height;
         this.width = width;
@@ -42,18 +52,43 @@ public class Map {
         this.map = map;
     }
 
+    /**
+     * Retrieves the map grid.
+     *
+     * @return The map grid as a two-dimensional ArrayList of Champions
+     */
     public ArrayList<ArrayList<Champion>> getMap() {
         return map;
     }
 
+    /**
+     * Retrieves the width of the map.
+     *
+     * @return The width of the map
+     */
     private int getWidth() {
         return width;
     }
 
+    /**
+     * Retrieves the height of the map.
+     *
+     * @return The height of the map
+     */
     private int getHeight() {
         return height;
     }
 
+    /**
+     * Randomly places objects such as orks, humans, elves, chests, items, and potions on the map.
+     *
+     * @param howMuchOrk    The number of orks to be placed
+     * @param howMuchHuman  The number of humans to be placed
+     * @param howMuchElf    The number of elves to be placed
+     * @param howMuchChest  The number of chests to be placed
+     * @param howMuchItem   The number of items to be placed
+     * @param howMuchPotion The number of potions to be placed
+     */
     public void placeObjectRandomly(int howMuchOrk, int howMuchHuman, int howMuchElf, int howMuchChest, int howMuchItem, int howMuchPotion) {
         numberOfObjects = howMuchOrk + howMuchHuman + howMuchElf + howMuchChest + howMuchItem + howMuchPotion;
         numberOfOrks = howMuchOrk;
@@ -126,6 +161,10 @@ public class Map {
 
     }
 
+    /**
+     * Draws the map on the console, representing the positions of champions and objects.
+     * Champions and objects are represented by specific characters and colors.
+     */
     public void mapDraw() {
         System.out.print("\u001B[90m╔");
         for (int i = 0; i < width; i++) {
@@ -161,6 +200,11 @@ public class Map {
         System.out.println();
     }
 
+    /**
+     * Executes a cycle of the day, where objects on the map move and perform actions based on their behavior.
+     * Champions and objects may move to adjacent positions or stay in place.
+     * Additionally, their movement behavior may be influenced by their current health points.
+     */
     public void dayCycle() {
         ArrayList<ArrayList<Champion>> list = map;
 
@@ -228,6 +272,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion to the right on the map or interacts with an opponent if present.
+     *
+     * @param champ    The champion to move.
+     * @param opponent The opponent champion present at the destination.
+     * @param i        The row index of the champion's current position.
+     * @param j        The column index of the champion's current position.
+     */
     private void toRight(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i, j + 1);
@@ -238,6 +290,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion to the left on the map or interacts with an opponent if present.
+     *
+     * @param champ    The champion to move.
+     * @param opponent The opponent champion present at the destination.
+     * @param i        The row index of the champion's current position.
+     * @param j        The column index of the champion's current position.
+     */
     private void toLeft(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i, j - 1);
@@ -248,6 +308,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion upward on the map or interacts with an opponent if present.
+     *
+     * @param champ    The champion to move.
+     * @param opponent The opponent champion present at the destination.
+     * @param i        The row index of the champion's current position.
+     * @param j        The column index of the champion's current position.
+     */
     private void toUp(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i + 1, j);
@@ -258,6 +326,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion downward on the map or interacts with an opponent if present.
+     *
+     * @param champ    The champion to move.
+     * @param opponent The opponent champion present at the destination.
+     * @param i        The row index of the champion's current position.
+     * @param j        The column index of the champion's current position.
+     */
     private void toDown(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i - 1, j);
@@ -268,6 +344,10 @@ public class Map {
         }
     }
 
+    /**
+     * Prints the current statistics of the map, including the number of different objects and their status.
+     * The output is displayed with appropriate colors.
+     */
     public void printStats() {
         // Print the current statistics of the map
         // along with colors
@@ -285,6 +365,12 @@ public class Map {
         System.out.println("\u001B[90m╚\u001B[0m");
     }
 
+    /**
+     * Performs the interaction between a champion and an opponent.
+     *
+     * @param champ    The champion who is taking the step.
+     * @param opponent The opponent champion standing at the destination where the champion wants to move.
+     */
     private void interaction(Champion champ, Champion opponent) {
         // Perform interaction based on the opponent's type
         switch (opponent.getType()) {
@@ -331,6 +417,11 @@ public class Map {
         }
     }
 
+    /**
+     * Decreases the statistics based on the type of the object.
+     *
+     * @param type The type of the object.
+     */
     private void decreaseStatistics(String type){
         switch (type) {
             case "ork" -> {
@@ -353,10 +444,20 @@ public class Map {
         }
     }
 
+    /**
+     * Removes an object from the matrix.
+     *
+     * @param yIndex The y-index of the object.
+     * @param xIndex The x-index of the object.
+     */
     private void mapDelete(int yIndex, int xIndex) {
         map.get(yIndex).set(xIndex, null);
     }
 
+    /**
+     * Clears the console screen.
+     * Note: This method might behave differently depending on the operating system.
+     */
     public static void clear() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
@@ -372,6 +473,11 @@ public class Map {
         }
     }
 
+    /**
+     * Checks if the game should end based on the remaining champions.
+     *
+     * @return {@code true} if the game should continue, {@code false} if the game should end.
+     */
     public boolean ifend() {
         String wall = "\u001B[90m║\u001B[37m";
         if (numberOfElfs == 0 && numberOfHumans == 0) {
