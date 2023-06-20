@@ -1,4 +1,5 @@
 package me.simulation.equipments;
+import java.util.*;
 
 public class Chest extends Kit{
     /**
@@ -10,5 +11,27 @@ public class Chest extends Kit{
      */
     public Chest(String type,int x_index,int y_index){
         super(type,x_index,y_index);
+    }
+
+    public static boolean isMimicGenerate(){
+        Random ran = new Random();
+        if(ran.nextInt(50)<=5){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static boolean whatsInside(){
+        Random ran = new Random();
+        if(ran.nextInt(50)<=24){
+            // TURE for SWORD
+            return true;
+        }
+        else {
+            // FALSE for SHIELD
+            return false;
+        }
     }
 }

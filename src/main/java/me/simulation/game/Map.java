@@ -371,22 +371,16 @@ public class Map {
                 }
                 else if(Objects.equals(opponent.getType(), "chest"))
                 {
-                    Random generator = new Random();
-                    int randommove = generator.nextInt(7);
-                    switch (randommove)
-                    {
-                        case 0 -> {
-                            champ.setHp(champ.getMaxHp()/10);//wpadł w pułapkę
-                            announcements.add(" "+champ.getType()+" fell into the trap");
-                        }
-                        case 1, 2, 3 -> {
-                            champ.setShield(true);//łapie tarcze
-                            announcements.add(" "+champ.getType()+" was equipped with shield");
-                        }
-                        case 4, 5, 6 -> {
-                            champ.setSword(true);//łapie miecz
-                            announcements.add(" "+champ.getType()+" was equipped with sword");
-                        }
+                    if(Chest.isMimicGenerate()) {
+                        champ.setHp(champ.getMaxHp() / 10);//wpadł w pułapkę
+                        announcements.add(" " + champ.getType() + " fell into the trap");
+                    }
+                    if(Chest.whatsInside()){
+                        champ.setSword(true);//łapie miecz
+                        announcements.add(" "+champ.getType()+" was equipped with sword");
+                    }else {
+                        champ.setShield(true);//łapie tarcze
+                        announcements.add(" "+champ.getType()+" was equipped with shield");
                     }
                 }
                 else if(Objects.equals(opponent.getType(), "item"))
