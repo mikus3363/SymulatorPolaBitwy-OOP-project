@@ -8,9 +8,7 @@ import me.simulation.players.Elf;
 import me.simulation.players.Human;
 import me.simulation.players.Ork;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Map {
     private int numberOfObjects = 0;
@@ -23,6 +21,7 @@ public class Map {
     private int numberOfOrksKilled = 0;
     private int numberOfElfsKilled = 0;
     private int numberOfHumansKilled = 0;
+    private List<String> announcements = new LinkedList<>();
     private final int width;
     private final int height;
     ArrayList<ArrayList<Champion>> map;
@@ -290,10 +289,15 @@ public class Map {
         System.out.println(wall + " \u001B[33mELF\u001B[37m:" + numberOfElfs + "\t\t Dead:" + numberOfElfsKilled);
         System.out.println(wall + " \u001B[34mHUMAN\u001B[37m:" + numberOfHumans + "\t Dead:" + numberOfHumansKilled);
         System.out.println(wall + " CHEST:" + numberOfChests + "\t POTION:" + numberOfPotions + "\t ITEMS:" + numberOfItems);
+        for(int i=0;i<announcements.toArray().length;i++)
+        {
+            System.out.println(wall+announcements.get(i));
+        }
         System.out.println("\u001B[90m╚\u001B[0m");
         System.out.println("\u001B[90m╔");
         System.out.println(wall + " Event Table");
         System.out.println("\u001B[90m╚\u001B[0m");
+        announcements.clear();
     }
 
     // Metoda interakcji która powinna się znaleść w Interface Interakcji
@@ -307,7 +311,17 @@ public class Map {
                 } else {
                     // Prosta implementacjia metody FIGHT
                     // oraz aktualizacjia statow mapy
-                    int iterator = 1;
+                    int iterator;
+                    if(champ.getLuck()>opponent.getLuck()){
+                        iterator = 0;
+                    }
+                    else if(champ.getLuck()<opponent.getLuck()){
+                        iterator = 1;
+                    }
+                    else{
+                        Random generator = new Random();
+                        iterator = generator.nextInt(2);
+                    }
                     while (champ.getHp() > 0 && opponent.getMaxHp() > 0) {
                         if (iterator % 2 == 1) {
                             if(!opponent.getShield()){//bez tarczy bije
@@ -339,10 +353,12 @@ public class Map {
                         map.get(opponent.getY_index()).set(opponent.getX_index(), champ);//zbicie przez wygranego
 
                         decreaseStatistics(opponent.getType());
+                        announcements.add(" "+champ.getType()+" killed "+opponent.getType());
                     } else if (champ.getHp() <= 0) {
                         mapDelete(champ.getY_index(), champ.getX_index());
 
                         decreaseStatistics(champ.getType());
+                        announcements.add(" "+opponent.getType()+" killed "+champ.getType());
                     }
                 }
             }
@@ -351,6 +367,7 @@ public class Map {
                 if(Objects.equals(opponent.getType(), "potion"))
                 {
                     champ.setHp(champ.getMaxHp());
+                    announcements.add(" "+champ.getType()+" drank potion");
                 }
                 else if(Objects.equals(opponent.getType(), "chest"))
                 {
@@ -360,12 +377,15 @@ public class Map {
                     {
                         case 0 -> {
                             champ.setHp(champ.getMaxHp()/10);//wpadł w pułapkę
+                            announcements.add(" "+champ.getType()+" fell into the trap");
                         }
                         case 1, 2, 3 -> {
                             champ.setShield(true);//łapie tarcze
+                            announcements.add(" "+champ.getType()+" was equipped with shield");
                         }
                         case 4, 5, 6 -> {
                             champ.setSword(true);//łapie miecz
+                            announcements.add(" "+champ.getType()+" was equipped with sword");
                         }
                     }
                 }
@@ -378,15 +398,19 @@ public class Map {
                         case 0 -> {
                             champ.setHp(champ.getHp()+3);//dostaje życie
                             champ.setMaxHp(champ.getMaxHp()+3);//i max życie
+                            announcements.add(" "+champ.getType()+" got a life boost");
                         }
                         case 1 -> {
                             champ.setLuck(champ.getLuck()+10);//dostaje szczęście
+                            announcements.add(" "+champ.getType()+" got a luck boost");
                         }
                         case 2 -> {
                             champ.setStrength(champ.getStrength()+3);//dostaje siły
+                            announcements.add(" "+champ.getType()+" got a strenght boost");
                         }
                         case 3 -> {
                             champ.setShield(true);//dostaje tarcze
+                            announcements.add(" "+champ.getType()+" was equipped with shield");
                         }
                     }
                 }
