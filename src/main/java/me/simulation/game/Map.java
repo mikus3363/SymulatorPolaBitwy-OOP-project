@@ -483,4 +483,13 @@ public class Map {
         return true;
 
     }
+    public boolean ifstop(){
+        if(announcements.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

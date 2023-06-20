@@ -29,7 +29,13 @@ public class ApplicationMain {
         map.placeObjectRandomly(5,10,8,5,5,5);
         map.mapDraw(); // Initial display of the map
         map.printStats();
-        TimeUnit.SECONDS.sleep(1);
+        if(map.ifstop()){
+            TimeUnit.MILLISECONDS.sleep(250);
+        }
+        else{
+            TimeUnit.SECONDS.sleep(2);
+        }
+
 
         System.out.println();
         while(map.ifend()) {
