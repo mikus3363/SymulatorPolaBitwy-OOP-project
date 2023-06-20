@@ -1,10 +1,9 @@
 package me.simulation.equipments;
 
-import me.simulation.game.Interaction;
 import me.simulation.players.Champion;
 
 
-public abstract class Kit extends Champion implements Interaction {
+public abstract class Kit extends Champion {
     /**
      * Constructs a new Kit object with the specified type, x-index, and y-index.
      *

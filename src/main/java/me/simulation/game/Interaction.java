@@ -1,52 +1,41 @@
 package me.simulation.game;
 
-import me.simulation.players.Champion;
-
-import java.util.ArrayList;
-
 public interface Interaction {
-    void setMove(boolean value);
-    default void newIndex(int newY, int newX){}
-    default int getX_index(){
-        return 1;
+
+    /**
+     * Kills the opponent champion.
+     *
+     * @param opponent the opponent champion's name
+     * @return a message indicating the champion killed the opponent
+     */
+    static String kill(String opponent){
+        return "Champion killed Opponent";
     }
-    default int getY_index(){
-        return 1;
+
+    /**
+     * Picks up a kit.
+     *
+     * @return a message indicating the champion picked up a kit
+     */
+    static String pickUp(){
+        return "Champion picked up Kit";
     }
-    default int getHp(){
-        return 1;
+
+    /**
+     * Traps the champion.
+     *
+     * @return a message indicating the champion fell into a trap
+     */
+    static String trap(){
+        return "Champion fell into the trap";
     }
-    default int getMaxHp(){
-        return 1;
-    }
-    default int getLvl(){
-        return 1;
-    }
-    default int getStrength() {
-        return 1;
-    }
-    default int getRange() {
-        return 1;
-    }
-    default String getType(){
-        return "default";
-    }
-    default int getLuck() {
-        return 1;
-    }
-    default int getLevel() {
-        return 1;
-    }
-    default boolean getMove() {
-        return false;
-    }
-    default boolean getSword() {
-        return false;
-    }
-    default boolean getShield() {
-        return false;
-    }
-    default boolean getRegeneration(){
-        return false;
+
+    /**
+     * Provides a boost to the champion.
+     *
+     * @return a message indicating the champion received a boost
+     */
+    static String boost(){
+        return "Champion got a boost";
     }
 }

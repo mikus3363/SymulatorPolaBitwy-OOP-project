@@ -1,15 +1,12 @@
 package me.simulation.game;
 
-import me.simulation.equipments.Chest;
-import me.simulation.equipments.Item;
-import me.simulation.equipments.Potion;
-import me.simulation.players.Champion;
-import me.simulation.players.Elf;
-import me.simulation.players.Human;
-import me.simulation.players.Ork;
-
+import me.simulation.equipments.*;
+import me.simulation.players.*;
 import java.util.*;
 
+/**
+ * Represents a game map with champions and objects.
+ */
 public class Map {
     private int numberOfObjects = 0;
     private int numberOfOrks = 0;
@@ -26,23 +23,44 @@ public class Map {
     private final int height;
     ArrayList<ArrayList<Champion>> map;
 
+    /**
+     * Get the map of champions.
+     *
+     * @return The map of champions.
+     */
     public ArrayList<ArrayList<Champion>> getMap() {
         return map;
     }
 
+    /**
+     * Get the width of the map.
+     *
+     * @return The width of the map.
+     */
     private int getWidth() {
         return width;
     }
 
+    /**
+     * Get the height of the map.
+     *
+     * @return The height of the map.
+     */
     private int getHeight() {
         return height;
     }
 
+    /**
+     * Constructs a new Map with the specified width and height.
+     *
+     * @param width  The width of the map.
+     * @param height The height of the map.
+     */
     public Map(int width, int height) {
         this.height = height;
         this.width = width;
 
-        // Inicjalizacja mapy
+        // Initialize the map
         ArrayList<ArrayList<Champion>> map = new ArrayList<>(height);
         for (int i = 0; i < height; i++) {
             map.add(new ArrayList<Champion>(width));
@@ -53,7 +71,16 @@ public class Map {
 
         this.map = map;
     }
-
+    /**
+     * Randomly places objects on the map, such as champions, chests, items, and potions.
+     *
+     * @param howMuchOrk   The number of Ork objects to place on the map.
+     * @param howMuchHuman The number of Human objects to place on the map.
+     * @param howMuchElf   The number of Elf objects to place on the map.
+     * @param howMuchChest The number of Chest objects to place on the map.
+     * @param howMuchItem  The number of Item objects to place on the map.
+     * @param howMuchPotion The number of Potion objects to place on the map.
+     */
     public void placeObjectRandomly(int howMuchOrk, int howMuchHuman, int howMuchElf, int howMuchChest, int howMuchItem, int howMuchPotion) {
         numberOfObjects = howMuchOrk + howMuchHuman + howMuchElf + howMuchChest + howMuchItem + howMuchPotion;
         numberOfOrks = howMuchOrk;
@@ -64,6 +91,8 @@ public class Map {
         numberOfItems = howMuchItem;
 
         int i;
+
+        // Place Ork objects randomly on the map
         i = 0;
         while (i < howMuchOrk) {
             int rand1 = (int) (Math.random() * (height));
@@ -74,6 +103,7 @@ public class Map {
             }
         }
 
+        // Place Human objects randomly on the map
         i = 0;
         while (i < howMuchHuman) {
             int rand1 = (int) (Math.random() * (height - 1));
@@ -84,16 +114,18 @@ public class Map {
             }
         }
 
+        // Place Elf objects randomly on the map
         i = 0;
         while (i < howMuchElf) {
             int rand1 = (int) (Math.random() * (height - 1));
             int rand2 = (int) (Math.random() * (width - 1));
             if (map.get(rand1).get(rand2) == null) {
-                map.get(rand1).set(rand2, new Elf("elf", 1, 20, 20, 15, 3, 3, true, false, false, rand2, rand1,false));
+                map.get(rand1).set(rand2, new Elf("elf", 1, 20, 20, 15, 6, 3, true, false, false, rand2, rand1,false));
                 i++;
             }
         }
 
+        // Place Chest objects randomly on the map
         i = 0;
         while (i < howMuchChest) {
             int rand1 = (int) (Math.random() * (height - 1));
@@ -104,6 +136,7 @@ public class Map {
             }
         }
 
+        // Place Item objects randomly on the map
         i = 0;
         while (i < howMuchItem) {
             int rand1 = (int) (Math.random() * (height - 1));
@@ -114,6 +147,7 @@ public class Map {
             }
         }
 
+        // Place Potion objects randomly on the map
         i = 0;
         while (i < howMuchPotion) {
             int rand1 = (int) (Math.random() * (height - 1));
@@ -126,6 +160,9 @@ public class Map {
 
     }
 
+    /**
+     * Draws the game map with champions and objects.
+     */
     public void mapDraw() {
         System.out.print("\u001B[90m╔");
         for (int i = 0; i < width; i++) {
@@ -137,7 +174,7 @@ public class Map {
         for (ArrayList<Champion> champions : map) {
             System.out.print("\u001B[90m║\u001B[0m");
             for (Champion champion : champions) {
-                // Zamieniłem IFY na Switcha dla lepszej wydajności
+                // Draw the corresponding symbol based on the champion's type
                 if (champion != null) switch (champion.getType()) {
                     case "ork" -> System.out.print("\u001B[32m O \u001B[0m");
                     case "human" -> System.out.print("\u001B[34m H \u001B[0m");
@@ -161,10 +198,15 @@ public class Map {
         System.out.println();
     }
 
+    /**
+     * Simulates a day cycle by moving objects on the map.
+     * The method handles the movement and behavior of champions.
+     * It also manages the regeneration of champions' health points.
+     */
     public void dayCycle() {
         ArrayList<ArrayList<Champion>> list = map;
 
-        // Metoda odpowiedzialna za poruszanie sie obiektow
+        // Movement of objects
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (list.get(i).get(j) != null) {
@@ -172,37 +214,34 @@ public class Map {
                         list.get(i).get(j).setMove(false);
                         Random generator = new Random();
                         Champion champ = list.get(i).get(j);
-                        if(champ.getHp()>=(champ.getMaxHp()/3) || !champ.getRegeneration()) {//rusza się jeśli ma wiecej hp lub nie ma regena
-                            int randommove = generator.nextInt(4);//zawsze sie rusza, warunki mało zdrowia zawsze 0
+                        if(champ.getHp()>=(champ.getMaxHp()/3) || !champ.getRegeneration()) {
+                            // Move if the champion has sufficient health or no regeneration
+                            int randommove = generator.nextInt(4);
                             switch (randommove) {
-                                //Na razie wylaczylem opcje stania w miejscu
-                                // case 0: stój w miejscu
-                                // break;
-                                case 0 -> {//ruch w prawo
-                                    if (j + 1 > width - 1) {//ściana
+                                case 0 -> {// Move right
+                                    if (j + 1 > width - 1) { // wall
                                         toLeft(champ, map.get(i).get(j - 1), i, j);
                                     }
-                                    // I dalej to samo
                                     else {
                                         toRight(champ, map.get(i).get(j + 1), i, j);
                                     }
                                 }
-                                case 1 -> {//ruch w lewo
-                                    if (j - 1 < 0) {//ściana
+                                case 1 -> {// Move left
+                                    if (j - 1 < 0) { // wall
                                         toRight(champ, map.get(i).get(j + 1), i, j);
                                     } else {
                                         toLeft(champ, map.get(i).get(j - 1), i, j);
                                     }
                                 }
-                                case 2 -> {//ruch do góry
-                                    if (i - 1 < 0) {//ściana
+                                case 2 -> {// Move up
+                                    if (i - 1 < 0) { // wall
                                         toUp(champ, map.get(i + 1).get(j), i, j);
                                     } else {
                                         toDown(champ, map.get(i - 1).get(j), i, j);
                                     }
                                 }
-                                case 3 -> {//ruch w dół
-                                    if (i + 1 > height - 1) {//ściana
+                                case 3 -> {// Move down
+                                    if (i + 1 > height - 1) { // wall
                                         toDown(champ, map.get(i - 1).get(j), i, j);
                                     } else {
                                         toUp(champ, map.get(i + 1).get(j), i, j);
@@ -211,19 +250,21 @@ public class Map {
                             }
                         }
                         else{
+                            // Regenerate health points if the champion's health is low
                             champ.setRegeneration(true);
-                            if(champ.getHp() >= ((champ.getMaxHp()/3)*2))//hp wzrośnie do 66% hp moze sie ruszac
+                            if(champ.getHp() >= ((champ.getMaxHp()/3)*2))
                             {
                                 champ.setRegeneration(false);
                             }
                             else {
-                                champ.setHp(champ.getHp() + (champ.getMaxHp() / 6));//stoi i leczy sie o maxhp/6
+                                champ.setHp(champ.getHp() + (champ.getMaxHp() / 6));
                             }
                         }
                     }
                 }
             }
         }
+        // Set movement flags for champions and non-champions
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (list.get(i).get(j) != null) {
@@ -238,6 +279,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion to the right on the map or triggers an interaction with an opponent.
+     *
+     * @param champ    The champion to be moved.
+     * @param opponent The opponent champion at the target position.
+     * @param i        The current row index of the champion.
+     * @param j        The current column index of the champion.
+     */
     private void toRight(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i, j + 1);
@@ -248,6 +297,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion to the left on the map or triggers an interaction with an opponent.
+     *
+     * @param champ    The champion to be moved.
+     * @param opponent The opponent champion at the target position.
+     * @param i        The current row index of the champion.
+     * @param j        The current column index of the champion.
+     */
     private void toLeft(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i, j - 1);
@@ -258,6 +315,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion upward on the map or triggers an interaction with an opponent.
+     *
+     * @param champ    The champion to be moved.
+     * @param opponent The opponent champion at the target position.
+     * @param i        The current row index of the champion.
+     * @param j        The current column index of the champion.
+     */
     private void toUp(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i + 1, j);
@@ -268,6 +333,14 @@ public class Map {
         }
     }
 
+    /**
+     * Moves the champion downward on the map or triggers an interaction with an opponent.
+     *
+     * @param champ    The champion to be moved.
+     * @param opponent The opponent champion at the target position.
+     * @param i        The current row index of the champion.
+     * @param j        The current column index of the champion.
+     */
     private void toDown(Champion champ, Champion opponent, int i, int j){
         if (opponent == null) {
             champ.newIndex(i - 1, j);
@@ -278,39 +351,79 @@ public class Map {
         }
     }
 
+    /**
+     * Prints the current statistics of the map, including colors.
+     * The statistics include the number of all objects on the map,
+     * the number of orks and their kills, the number of elves and their kills,
+     * the number of humans and their kills, the number of chests, potions, and items.
+     * It also prints any announcements stored in the announcements list.
+     * After printing the statistics and announcements, the announcements list is cleared.
+     */
     public void printStats() {
-        // wypisuje aktualne statystyki mapy
-        // wraz z kolorami
+        // Prints the header of the statistics with color-coded walls
         String wall = "\u001B[90m║\u001B[37m";
         System.out.println("\u001B[90m╔");
+
+        // Calculates the number of remaining objects on the map
         int all = numberOfObjects-numberOfElfsKilled-numberOfHumansKilled-numberOfOrksKilled;
+
+        // Prints the total number of remaining objects
         System.out.println(wall + " ALL:" + all);
+
+        // Prints the number of orks and their kills
         System.out.println(wall + " \u001B[32mORK\u001B[37m:" + numberOfOrks + "\t\t Dead:" + numberOfOrksKilled);
+
+        // Prints the number of elves and their kills
         System.out.println(wall + " \u001B[33mELF\u001B[37m:" + numberOfElfs + "\t\t Dead:" + numberOfElfsKilled);
+
+        // Prints the number of humans and their kills
         System.out.println(wall + " \u001B[34mHUMAN\u001B[37m:" + numberOfHumans + "\t Dead:" + numberOfHumansKilled);
+
+        // Prints the number of chests, potions, and items
         System.out.println(wall + " CHEST:" + numberOfChests + "\t POTION:" + numberOfPotions + "\t ITEMS:" + numberOfItems);
+
+        System.out.println("\u001B[90m╚\u001B[0m");
+
+        // Prints the header for the announcements section
+        System.out.println("\u001B[90m╔");
+
+        // Prints each announcement stored in the announcements list
         for(int i=0;i<announcements.toArray().length;i++)
         {
-            System.out.println(wall+announcements.get(i));
+            System.out.println(wall+" -> "+announcements.get(i));
         }
         System.out.println("\u001B[90m╚\u001B[0m");
-        System.out.println("\u001B[90m╔");
-        System.out.println(wall + " Event Table");
-        System.out.println("\u001B[90m╚\u001B[0m");
+
+        // Clears the announcements list
         announcements.clear();
     }
 
-    // Metoda interakcji która powinna się znaleść w Interface Interakcji
+    /**
+     * Performs an interaction between the champion and the opponent on the map.
+     * The method takes a champion object (the one performing the action) and an opponent object (the one occupying the champion's desired location).
+     *
+     * If the opponent is another orc, human, or elf, a fight occurs. The champion and opponent engage in combat.
+     * If the champion and opponent have the same type, the opponent's level is increased.
+     * Otherwise, a simple fight implementation takes place, updating the map's statistics.
+     * The outcome of the fight depends on luck and other factors.
+     *
+     * If the opponent is an item, chest, or potion, the champion interacts with it.
+     * If the opponent is a potion, the champion's health is restored to its maximum value.
+     * If the opponent is a chest, there is a chance of triggering a trap. If not trapped, the champion receives either a sword or a shield.
+     * If the opponent is an item, the champion receives a random attribute boost or a shield.
+     * The map is updated accordingly, and the opponent is removed from the map.
+     *
+     * @param champ The champion performing the action.
+     * @param opponent The opponent occupying the champion's desired location.
+     */
     private void interaction(Champion champ, Champion opponent) {
-        // Metoda przyjmuje championa (obiekt ktory wykonuje krok) oraz opponenta (obiekt kory stoi w miejscu na kore chial by wejsc champ)
+        // If the opponent is another orc, human, or elf, a fight occurs
         switch (opponent.getType()) {
-            // jezeli jest to inny ork, human, elf wykonuje sie FIGHT
             case "ork", "human", "elf" -> {
                 if (champ.getType().equals(opponent.getType())) {
                     opponent.increaseLevel();
                 } else {
-                    // Prosta implementacjia metody FIGHT
-                    // oraz aktualizacjia statow mapy
+                    // Simple fight implementation and map stats update
                     int iterator;
                     if(champ.getLuck()>opponent.getLuck()){
                         iterator = 0;
@@ -324,20 +437,20 @@ public class Map {
                     }
                     while (champ.getHp() > 0 && opponent.getMaxHp() > 0) {
                         if (iterator % 2 == 1) {
-                            if(!opponent.getShield()){//bez tarczy bije
+                            if(!opponent.getShield()){// without a shield
                                 opponent.takeDMG(champ.getStrength(), champ.getLevel(), champ.getRange(), champ.getLuck());
                             }
                             else{
                                 opponent.setShield(false);
                             }
-                            //z ratczą nic
+                            // no dmg if with shield
                         } else {
-                            if(champ.getSword())//ma miecz bije mocniej
+                            if(champ.getSword())//sword makes hit stronger
                             {
                                 champ.takeDMG(opponent.getStrength()+2, opponent.getLevel(), opponent.getRange()+2, opponent.getLuck());
                                 champ.setSword(false);
                             }
-                            else {//normalny cios
+                            else {//normal hit
                                 champ.takeDMG(opponent.getStrength(), opponent.getLevel(), opponent.getRange(), opponent.getLuck());
                             }
 
@@ -350,7 +463,7 @@ public class Map {
                         champ.newIndex(opponent.getY_index(), opponent.getX_index());
 
                         mapDelete(opponent.getY_index(), opponent.getX_index());
-                        map.get(opponent.getY_index()).set(opponent.getX_index(), champ);//zbicie przez wygranego
+                        map.get(opponent.getY_index()).set(opponent.getX_index(), champ);//kill by the winning
 
                         decreaseStatistics(opponent.getType());
                         announcements.add(" "+champ.getType()+" killed "+opponent.getType());
@@ -362,13 +475,15 @@ public class Map {
                     }
                 }
             }
+            // If the opponent is an item, chest, or potion
             case "item", "chest", "potion" -> {
-                // jezeli jest jakis KIT to mamy narazie doczynienia jedynie z "pochlonieciem" tego obiektu
+                // Potion interaction
                 if(Objects.equals(opponent.getType(), "potion"))
                 {
                     champ.setHp(champ.getMaxHp());
                     announcements.add(" "+champ.getType()+" drank potion");
                 }
+                // Chest interaction
                 else if(Objects.equals(opponent.getType(), "chest"))
                 {
                     if(Chest.isMimicGenerate()) {
@@ -376,13 +491,14 @@ public class Map {
                         announcements.add(" " + champ.getType() + " fell into the trap");
                     }
                     if(Chest.whatsInside()){
-                        champ.setSword(true);//łapie miecz
+                        champ.setSword(true);//picks up sword
                         announcements.add(" "+champ.getType()+" was equipped with sword");
                     }else {
-                        champ.setShield(true);//łapie tarcze
+                        champ.setShield(true);//picks up shield
                         announcements.add(" "+champ.getType()+" was equipped with shield");
                     }
                 }
+                // Item interaction
                 else if(Objects.equals(opponent.getType(), "item"))
                 {
                     Random generator = new Random();
@@ -390,20 +506,20 @@ public class Map {
                     switch (randommove)
                     {
                         case 0 -> {
-                            champ.setHp(champ.getHp()+3);//dostaje życie
-                            champ.setMaxHp(champ.getMaxHp()+3);//i max życie
+                            champ.setHp(champ.getHp()+3);//gets hp
+                            champ.setMaxHp(champ.getMaxHp()+3);//max hp
                             announcements.add(" "+champ.getType()+" got a life boost");
                         }
                         case 1 -> {
-                            champ.setLuck(champ.getLuck()+10);//dostaje szczęście
+                            champ.setLuck(champ.getLuck()+10);//gets luck
                             announcements.add(" "+champ.getType()+" got a luck boost");
                         }
                         case 2 -> {
-                            champ.setStrength(champ.getStrength()+3);//dostaje siły
+                            champ.setStrength(champ.getStrength()+3);//gets strenght
                             announcements.add(" "+champ.getType()+" got a strenght boost");
                         }
                         case 3 -> {
-                            champ.setShield(true);//dostaje tarcze
+                            champ.setShield(true);//gets shield
                             announcements.add(" "+champ.getType()+" was equipped with shield");
                         }
                     }
@@ -417,6 +533,11 @@ public class Map {
         }
     }
 
+    /**
+     * Decreases the statistics based on the given type.
+     *
+     * @param type The type of the object to decrease statistics for.
+     */
     private void decreaseStatistics(String type){
         switch (type) {
             case "ork" -> {
@@ -435,16 +556,28 @@ public class Map {
             case "chest" -> numberOfChests--;
             case "potion" -> numberOfPotions--;
             default -> {
+                // Do nothing for unknown types
             }
         }
     }
 
-    // To najzwyczajniej w świecie usuwa obiekt z macierzy
+    /**
+     * Removes an object from the map matrix at the specified coordinates.
+     *
+     * @param yIndex The y-coordinate of the object to be removed.
+     * @param xIndex The x-coordinate of the object to be removed.
+     */
     private void mapDelete(int yIndex, int xIndex) {
         map.get(yIndex).set(xIndex, null);
     }
 
-    // To powinno w przyszłości czyścić konsole
+    /**
+     * Clears the console screen.
+     * This method attempts to clear the console screen by executing platform-specific commands.
+     * On Windows, it uses the "cls" command to clear the screen.
+     * On other platforms, it executes the "clear" command and also sends control characters to reset the cursor position.
+     * If any exception occurs during the process, it will be printed to the standard error output.
+     */
     public static void clear() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
@@ -460,6 +593,15 @@ public class Map {
         }
     }
 
+    /**
+     * Checks if the game has reached its end condition.
+     * The end conditions are:
+     * - If there are no more elves and humans remaining, the orcs have conquered the battlefield.
+     * - If there are no more elves and orcs remaining, the humans have conquered the battlefield.
+     * - If there are no more orcs and humans remaining, the elves have conquered the battlefield.
+     *
+     * @return {@code true} if the game has not reached its end condition yet, {@code false} otherwise.
+     */
     public boolean ifend() {
         String wall = "\u001B[90m║\u001B[37m";
         if (numberOfElfs == 0 && numberOfHumans == 0) {
@@ -483,11 +625,20 @@ public class Map {
         return true;
 
     }
+
+    /**
+     * Checks if there are any announcements.
+     *
+     * @return {@code true} if there are no announcements, {@code false} otherwise.
+     */
     public boolean ifstop(){
+        // Check if the list of announcements is empty
         if(announcements.isEmpty()){
+            // If the list is empty, there are no announcements, so return true
             return true;
         }
         else{
+            // If the list is not empty, there are announcements, so return false
             return false;
         }
     }
