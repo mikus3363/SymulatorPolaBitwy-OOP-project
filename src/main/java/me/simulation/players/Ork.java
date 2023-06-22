@@ -2,6 +2,7 @@ package me.simulation.players;
 
 
 import me.simulation.game.Interaction;
+
 /**
  * Represents a Ork player in the simulation.
  * Extends the Champion class.

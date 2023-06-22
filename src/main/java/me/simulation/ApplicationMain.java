@@ -1,10 +1,15 @@
 package me.simulation;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import me.simulation.game.Map;
 
+/**
+ * Main method to start the simulation application.
+ */
 public class ApplicationMain {
     /**
      * Main method to start the simulation application.
@@ -19,7 +24,7 @@ public class ApplicationMain {
      * @throws IllegalArgumentException if the input provided is not valid
      * @throws InputMismatchException if the input provided is of the wrong type
      */
-    public static void main(String[] args) throws InterruptedException, IllegalArgumentException, InputMismatchException {
+    public static void main(String[] args) throws InterruptedException, IllegalArgumentException, InputMismatchException, FileNotFoundException {
         int menu, width, height, howMuchOrk, howMuchHuman, howMuchElf, howMuchChest, howMuchItem, howMuchPotion;
         Scanner scanner = new Scanner(System.in);
 
@@ -28,6 +33,7 @@ public class ApplicationMain {
                 "║ Tryb mapa [13;13] \u001B[32m->\u001B[0m 1\n" +
                 "║ Tryb mapa [8;8] \u001B[32m->\u001B[0m 2\n" +
                 "║ Tryb mapa [własne] + ilosci mobów [własne] \u001B[32m->\u001B[0m 3\n" +
+                "║ Tryb mapa [config] \u001B[32m->\u001B[0m 4\n" +
                 "╚\n");
         System.out.print("PROMPT \u001B[32m->\u001B[0m ");
 
@@ -76,6 +82,13 @@ public class ApplicationMain {
 
                 map.placeObjectRandomly(howMuchOrk, howMuchHuman, howMuchElf, howMuchChest, howMuchItem, howMuchPotion);
             }
+            case 4 -> {
+                File config = new File("config.txt");
+                Scanner odczyt = new Scanner(config);
+                odczyt.nextLine();
+                map = new Map(odczyt.nextInt(), odczyt.nextInt());
+                map.placeObjectRandomly(odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt());
+            }
             default -> {
                 map = new Map(24, 16);
                 map.placeObjectRandomly(5, 10, 8, 5, 5, 5);
@@ -102,5 +115,6 @@ public class ApplicationMain {
             map.printStats();
             TimeUnit.SECONDS.sleep(1);
         }
+
     }
 }

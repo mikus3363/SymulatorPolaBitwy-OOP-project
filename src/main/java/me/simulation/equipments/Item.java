@@ -1,5 +1,8 @@
 package me.simulation.equipments;
 
+/**
+ * Represents a Kit class
+ */
 public class Item extends Kit{
     /**
      * Constructs a new Item object with the specified attributes.

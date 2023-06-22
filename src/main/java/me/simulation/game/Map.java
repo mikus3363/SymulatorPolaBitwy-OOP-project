@@ -2,6 +2,10 @@ package me.simulation.game;
 
 import me.simulation.equipments.*;
 import me.simulation.players.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -21,6 +25,7 @@ public class Map {
     private List<String> announcements = new LinkedList<>();
     private final int width;
     private final int height;
+    private int dayCyclesPassed = 0;
     ArrayList<ArrayList<Champion>> map;
 
     /**
@@ -277,6 +282,7 @@ public class Map {
                 }
             }
         }
+        dayCyclesPassed++;
     }
 
     /**
@@ -602,21 +608,28 @@ public class Map {
      *
      * @return {@code true} if the game has not reached its end condition yet, {@code false} otherwise.
      */
-    public boolean ifend() {
+    public boolean ifend() throws FileNotFoundException {
+        String message;
         String wall = "\u001B[90m║\u001B[37m";
         if (numberOfElfs == 0 && numberOfHumans == 0) {
+            message = "\u001B[90m╔\n\u001B[90m║\u001B[37m\u001B[32mOrki podbiły pole bitwy!\n\u001B[90m╚\u001B[0m";
+            writeResult(message);
             System.out.println("\u001B[90m╔");
             System.out.println(wall+" \u001B[32mOrki podbiły pole bitwy!");
             System.out.println("\u001B[90m╚\u001B[0m");
             return false;
         }
         if (numberOfElfs == 0 && numberOfOrks == 0) {
+            message = "\u001B[90m╔\n\u001B[90m║\u001B[37m\u001B[32mLudzie podbili pole bitwy!\n\u001B[90m╚\u001B[0m";
+            writeResult(message);
             System.out.println("\u001B[90m╔");
             System.out.println(wall+" \u001B[34mLudzie podbili pole bitwy!");
             System.out.println("\u001B[90m╚\u001B[0m");
             return false;
         }
         if (numberOfOrks == 0 && numberOfHumans == 0) {
+            message = "\u001B[90m╔\n\u001B[90m║\u001B[37m\u001B[32mElfy podbiły pole bitwy!\n\u001B[90m╚\u001B[0m";
+            writeResult(message);
             System.out.println("\u001B[90m╔");
             System.out.println(wall+" \u001B[33mElfy podbiły pole bitwy!");
             System.out.println("\u001B[90m╚\u001B[0m");
@@ -641,6 +654,12 @@ public class Map {
             // If the list is not empty, there are announcements, so return false
             return false;
         }
+    }
+
+    public void writeResult(String value) throws FileNotFoundException {
+        PrintWriter zapis = new PrintWriter("RESULTS.txt");
+        zapis.println("Tyle dni trwała symulacja: "+dayCyclesPassed+"\n"+value);
+        zapis.close();
     }
 
 }

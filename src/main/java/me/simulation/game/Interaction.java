@@ -1,5 +1,8 @@
 package me.simulation.game;
 
+/**
+ * Interface for interactions in Ork, Elf, Human classes
+ */
 public interface Interaction {
 
     /**

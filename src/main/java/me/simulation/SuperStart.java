@@ -1,6 +1,12 @@
 package me.simulation;
 
+import java.io.FileNotFoundException;
+
+/**
+ * Required for a maven and .jar file
+ */
 public class SuperStart {
+
     /**
      * The entry point of the application.
      *
@@ -10,7 +16,7 @@ public class SuperStart {
      * @param args the command-line arguments
      * @throws InterruptedException if the main thread is interrupted while sleeping
      */
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         String prompt = "  ___                _      _             ___     _        ___ _ _                \n" +
                 " / __|_  _ _ __ _  _| |__ _| |_ ___ _ _  | _ \\___| |__ _  | _ |_) |___ __ ___  _  \n" +
                 " \\__ \\ || | '  \\ || | / _` |  _/ _ \\ '_| |  _/ _ \\ / _` | | _ \\ |  _\\ V  V / || | \n" +

@@ -1,6 +1,9 @@
 package me.simulation.equipments;
 import java.util.*;
 
+/**
+ * Represents a Chest class
+ */
 public class Chest extends Kit{
     /**
      * Constructs a new Chest object with the specified attributes.
@@ -13,6 +16,10 @@ public class Chest extends Kit{
         super(type,x_index,y_index);
     }
 
+    /**
+     * Determines whether a mimic should be generated.
+     * @return true if a mimic should be generated, false otherwise
+     */
     public static boolean isMimicGenerate(){
         Random ran = new Random();
         if(ran.nextInt(50)<=5){
@@ -23,6 +30,10 @@ public class Chest extends Kit{
         }
     }
 
+    /**
+     *Determines what is inside a container.
+     *@return true if the container contains a sword, false if it contains a shield
+     */
     public static boolean whatsInside(){
         Random ran = new Random();
         if(ran.nextInt(50)<=24){

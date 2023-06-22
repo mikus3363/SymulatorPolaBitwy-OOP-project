@@ -1,0 +1,4 @@
+width, height, numberOfOrks, numberOfElfs, numberOfHumans, numberOfChests, numberOfItems, numberOfPotions
+24 16 5 8 10 5 5 5
+
+

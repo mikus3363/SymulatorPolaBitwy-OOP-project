@@ -2,7 +2,9 @@ package me.simulation.equipments;
 
 import me.simulation.players.Champion;
 
-
+/**
+ * Represents an abstract Kit in the simulation.
+ */
 public abstract class Kit extends Champion {
     /**
      * Constructs a new Kit object with the specified type, x-index, and y-index.
