@@ -657,9 +657,9 @@ public class Map {
     }
 
     public void writeResult(String value) throws FileNotFoundException {
-        PrintWriter zapis = new PrintWriter("RESULTS.txt");
-        zapis.println("Tyle dni trwała symulacja: "+dayCyclesPassed+"\n"+value);
-        zapis.close();
+        PrintWriter writer = new PrintWriter("RESULTS.txt");
+        writer.println("Tyle dni trwała symulacja: "+dayCyclesPassed+"\n"+value);
+        writer.close();
     }
 
 }

@@ -84,10 +84,10 @@ public class ApplicationMain {
             }
             case 4 -> {
                 File config = new File("config.txt");
-                Scanner odczyt = new Scanner(config);
-                odczyt.nextLine();
-                map = new Map(odczyt.nextInt(), odczyt.nextInt());
-                map.placeObjectRandomly(odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt(), odczyt.nextInt());
+                Scanner scanner1 = new Scanner(config);
+                scanner1.nextLine();
+                map = new Map(scanner1.nextInt(), scanner1.nextInt());
+                map.placeObjectRandomly(scanner1.nextInt(), scanner1.nextInt(), scanner1.nextInt(), scanner1.nextInt(), scanner1.nextInt(), scanner1.nextInt());
             }
             default -> {
                 map = new Map(24, 16);
