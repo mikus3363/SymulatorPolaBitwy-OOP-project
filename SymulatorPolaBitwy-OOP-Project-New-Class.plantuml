@@ -31,21 +31,24 @@ class Chest {
    mimicGenerate: boolean
 }
 interface DefaultRequired << interface >> {
-  + newIndex(int, int): void
-   level: int
-   type: String
-   y_index: int
-   regeneration: boolean
-   luck: int
-   sword: boolean
-   range: int
-   lvl: int
-   strength: int
-   move: boolean
-   hp: int
-   shield: boolean
-   x_index: int
-   maxHp: int
+  newIndex(int, int): void
+   setMove(boolean value)
+   newIndex(int newY, int newX)
+   getX_index(): int
+   getY_index(): int
+   getHp(): int
+   getMaxHp(): int
+   getLvl(): int
+   getStrength(): int
+   getRange(): int
+    getType(): String
+    getLuck(): int
+    getLevel(): int
+    getMove(): boolean
+    getSword(): boolean
+    getShield(): boolean
+    getRegeneration(): boolean
+
 }
 class Elf {
   - level: 1
