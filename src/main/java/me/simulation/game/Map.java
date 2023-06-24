@@ -26,7 +26,7 @@ public class Map {
     private final int width;
     private final int height;
     private int dayCyclesPassed = 0;
-    ArrayList<ArrayList<Champion>> map;
+    private ArrayList<ArrayList<Champion>> map;
 
     /**
      * Get the map of champions.

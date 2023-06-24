@@ -1,16 +1,19 @@
 @startuml
 
-!theme plain
+!theme toy
 top to bottom direction
 skinparam linetype ortho
 
 class ApplicationMain {
+   + Map map
   + ApplicationMain(): 
   + main(String[]): void
 }
 class Champion {
-  + Champion(String, int, int): 
-  + Champion(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
+  - level: int
+  - sword: boolean
+  - shield: boolean
+  - maxHp: int
   - regeneration: boolean
   - type: String
   - strength: int
@@ -21,22 +24,6 @@ class Champion {
   - range: int
   - hp: int
   - x_index: int
-  + takeDMG(int, int, int, int): void
-  + newIndex(int, int): void
-  + increaseLevel(): void
-   level: int
-   type: String
-   y_index: int
-   regeneration: boolean
-   luck: int
-   sword: boolean
-   range: int
-   strength: int
-   move: boolean
-   hp: int
-   shield: boolean
-   x_index: int
-   maxHp: int
 }
 class Chest {
   + Chest(String, int, int): 
@@ -61,24 +48,42 @@ interface DefaultRequired << interface >> {
    maxHp: int
 }
 class Elf {
-  + Elf(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
-  ~ trap(): String
-  + pickUp(String): String
-  + kill(String): String
-  ~ boost(String): String
+  - level: 1
+   - sword: true
+   - shield: true
+   - maxHp: 20
+    - regeneration: false
+    - type: champion
+    - strength: 5
+    - move: true
+    - luck: 5
+    - y_index: 5
+    - level: 5
+    - range: 5
+    - hp: 20
+    - x_index: 7
 }
 class Human {
-  + Human(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
-  + kill(String): String
-  + pickUp(String): String
-  ~ boost(String): String
-  ~ trap(): String
+  - level: 1
+   - sword: true
+   - shield: true
+   - maxHp: 20
+    - regeneration: false
+    - type: champion
+    - strength: 5
+    - move: true
+    - luck: 5
+    - y_index: 5
+    - level: 5
+    - range: 5
+    - hp: 20
+    - x_index: 7
 }
 interface Interaction << interface >> {
-  + kill(String): String
-  + boost(): String
-  + trap(): String
-  + pickUp(): String
+   kill(String): String
+   boost(): String
+   trap(): String
+   pickUp(): String
 }
 class Item {
   + Item(String, int, int): 
@@ -87,35 +92,28 @@ class Kit {
   + Kit(String, int, int): 
 }
 class Map {
-  + Map(int, int): 
-  - width: int
-  ~ map: ArrayList<ArrayList<Champion>>
-  - height: int
-  + writeResult(String): void
-  - decreaseStatistics(String): void
-  + ifstop(): boolean
-  - toUp(Champion, Champion, int, int): void
-  - interaction(Champion, Champion): void
-  - toDown(Champion, Champion, int, int): void
-  - mapDelete(int, int): void
-  + mapDraw(): void
-  - toLeft(Champion, Champion, int, int): void
-  + ifend(): boolean
-  + printStats(): void
-  + clear(): void
-  + dayCycle(): void
-  - toRight(Champion, Champion, int, int): void
-  + placeObjectRandomly(int, int, int, int, int, int): void
-   map: ArrayList<ArrayList<Champion>>
-   height: int
-   width: int
+  - width: 24
+  - map: ArrayList<ArrayList<Champion>>
+  - height: 16
+  + Human human1
+  + Ork ork1
+  + Elf elf1
 }
 class Ork {
-  + Ork(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
-  + pickUp(String): String
-  ~ boost(String): String
-  + kill(String): String
-  ~ trap(): String
+  - level: 1
+   - sword: true
+   - shield: true
+   - maxHp: 20
+    - regeneration: false
+    - type: champion
+    - strength: 5
+    - move: true
+    - luck: 5
+    - y_index: 5
+    - level: 5
+    - range: 5
+    - hp: 20
+    - x_index: 7
 }
 class Potion {
   + Potion(String, int, int): 
@@ -124,6 +122,13 @@ class SuperStart {
   + SuperStart(): 
   + main(String[]): void
 }
+
+Map         -[#000000,dotted]-^  ApplicationMain
+Elf              -[#000000,dotted]-^  Map
+Ork              -[#000000,dotted]-^  Map
+Human            -[#000000,dotted]-^  Map
+ApplicationMain            -[#000000,dotted]-^  SuperStart
+
 
 Champion         -[#008200,dashed]-^  DefaultRequired 
 Chest            -[#000082,plain]-^  Kit             
