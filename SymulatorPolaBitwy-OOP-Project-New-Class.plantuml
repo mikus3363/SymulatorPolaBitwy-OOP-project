@@ -1,6 +1,6 @@
 @startuml
 
-!theme toy
+!theme plain
 top to bottom direction
 skinparam linetype ortho
 
@@ -10,56 +10,75 @@ class ApplicationMain {
 }
 class Champion {
   + Champion(String, int, int): 
-  + Champion(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+  + Champion(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
+  - regeneration: boolean
+  - type: String
+  - strength: int
+  - move: boolean
+  - luck: int
+  - y_index: int
+  - level: int
+  - range: int
   - hp: int
   - x_index: int
-  - move: boolean
-  - level: int
-  - strength: int
-  - y_index: int
-  - luck: int
-  - range: int
-  - type: String
-  + newIndex(int, int): void
   + takeDMG(int, int, int, int): void
+  + newIndex(int, int): void
   + increaseLevel(): void
-   maxHp: int
-   sword: boolean
-   schield: boolean
-   type: String
    level: int
-   move: boolean
-   strength: int
+   type: String
    y_index: int
-   x_index: int
-   range: int
+   regeneration: boolean
    luck: int
+   sword: boolean
+   range: int
+   strength: int
+   move: boolean
    hp: int
+   shield: boolean
+   x_index: int
+   maxHp: int
 }
 class Chest {
   + Chest(String, int, int): 
+  + whatsInside(): boolean
+   mimicGenerate: boolean
+}
+interface DefaultRequired << interface >> {
+  + newIndex(int, int): void
+   level: int
+   type: String
+   y_index: int
+   regeneration: boolean
+   luck: int
+   sword: boolean
+   range: int
+   lvl: int
+   strength: int
+   move: boolean
+   hp: int
+   shield: boolean
+   x_index: int
+   maxHp: int
 }
 class Elf {
-  + Elf(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+  + Elf(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
+  ~ trap(): String
+  + pickUp(String): String
+  + kill(String): String
+  ~ boost(String): String
 }
 class Human {
-  + Human(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+  + Human(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
+  + kill(String): String
+  + pickUp(String): String
+  ~ boost(String): String
+  ~ trap(): String
 }
 interface Interaction << interface >> {
-  + newIndex(int, int): void
-   sword: boolean
-   type: String
-   strength: int
-   maxHp: int
-   schield: boolean
-   level: int
-   move: boolean
-   lvl: int
-   y_index: int
-   x_index: int
-   range: int
-   luck: int
-   hp: int
+  + kill(String): String
+  + boost(): String
+  + trap(): String
+  + pickUp(): String
 }
 class Item {
   + Item(String, int, int): 
@@ -69,28 +88,34 @@ class Kit {
 }
 class Map {
   + Map(int, int): 
-  - height: int
   - width: int
   ~ map: ArrayList<ArrayList<Champion>>
-  - interaction(Champion, Champion): void
-  + mapDraw(): void
-  + placeObjectRandomly(int, int, int, int, int, int): void
-  + dayCycle(): void
-  + ifend(): boolean
-  - toRight(Champion, Champion, int, int): void
-  + printStats(): void
-  - toLeft(Champion, Champion, int, int): void
-  - toUp(Champion, Champion, int, int): void
-  + clear(): void
+  - height: int
+  + writeResult(String): void
   - decreaseStatistics(String): void
-  - mapDelete(int, int): void
+  + ifstop(): boolean
+  - toUp(Champion, Champion, int, int): void
+  - interaction(Champion, Champion): void
   - toDown(Champion, Champion, int, int): void
+  - mapDelete(int, int): void
+  + mapDraw(): void
+  - toLeft(Champion, Champion, int, int): void
+  + ifend(): boolean
+  + printStats(): void
+  + clear(): void
+  + dayCycle(): void
+  - toRight(Champion, Champion, int, int): void
+  + placeObjectRandomly(int, int, int, int, int, int): void
    map: ArrayList<ArrayList<Champion>>
    height: int
    width: int
 }
 class Ork {
-  + Ork(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int): 
+  + Ork(String, int, int, int, int, int, int, boolean, boolean, boolean, int, int, boolean): 
+  + pickUp(String): String
+  ~ boost(String): String
+  + kill(String): String
+  ~ trap(): String
 }
 class Potion {
   + Potion(String, int, int): 
@@ -100,13 +125,13 @@ class SuperStart {
   + main(String[]): void
 }
 
-Champion         -[#008200,dashed]-^  Interaction     
+Champion         -[#008200,dashed]-^  DefaultRequired 
 Chest            -[#000082,plain]-^  Kit             
 Elf              -[#000082,plain]-^  Champion        
 Human            -[#000082,plain]-^  Champion        
 Item             -[#000082,plain]-^  Kit             
 Kit              -[#000082,plain]-^  Champion        
-Kit              -[#008200,dashed]-^  Interaction     
 Ork              -[#000082,plain]-^  Champion        
+Ork              -[#008200,dashed]-^  Interaction     
 Potion           -[#000082,plain]-^  Kit             
 @enduml
