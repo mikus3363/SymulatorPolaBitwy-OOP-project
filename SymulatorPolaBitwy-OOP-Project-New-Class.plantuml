@@ -95,6 +95,20 @@ class Kit {
   + Kit(String, int, int): 
 }
 class Map {
+    -  numberOfObjects: 30;
+    -  numberOfOrks: 5;
+    -  numberOfElfs = 8;
+    -  numberOfHumans = 10;
+    -  numberOfChests = 5;
+    -  numberOfItems = 5;
+    -  numberOfPotions = 5;
+    -  numberOfOrksKilled = 0;
+    - numberOfElfsKilled = 0;
+    - numberOfHumansKilled = 0;
+    - List<String> announcements = LinkedList;
+    - final int width;
+    - final int height;
+    - int dayCyclesPassed = 0;
   - width: 24
   - map: ArrayList<ArrayList<Champion>>
   - height: 16
@@ -130,6 +144,9 @@ Map         -[#000000,dotted]-^  ApplicationMain
 Elf              -[#000000,dotted]-^  Map
 Ork              -[#000000,dotted]-^  Map
 Human            -[#000000,dotted]-^  Map
+Potion              -[#000000,dotted]-^  Map
+Chest              -[#000000,dotted]-^  Map
+Item            -[#000000,dotted]-^  Map
 ApplicationMain            -[#000000,dotted]-^  SuperStart
 
 
