@@ -26,9 +26,9 @@ class Champion {
   - x_index: int
 }
 class Chest {
-  + Chest(String, int, int): 
-  + whatsInside(): boolean
-   mimicGenerate: boolean
+  - type: chest
+  - y_index: 5
+  - x_index: 7
 }
 interface DefaultRequired << interface >> {
   newIndex(int, int): void
@@ -89,10 +89,14 @@ interface Interaction << interface >> {
    pickUp(): String
 }
 class Item {
-  + Item(String, int, int): 
+  - type: item
+  - y_index: 5
+  - x_index: 7
 }
 class Kit {
-  + Kit(String, int, int): 
+  - type: String
+  - y_index: int
+  - x_index: int
 }
 class Map {
     -  numberOfObjects: 30;
@@ -133,7 +137,9 @@ class Ork {
     - x_index: 7
 }
 class Potion {
-  + Potion(String, int, int): 
+  - type: potion
+  - y_index: 5
+  - x_index: 7
 }
 class SuperStart {
   + SuperStart(): 
